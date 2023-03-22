@@ -4,4 +4,5 @@
     <dimen name="profile_image_size">64dp</dimen>
     <dimen name="open_images">24dp</dimen>
     <dimen name="exit_image">36dp</dimen>
+    <dimen name="Bottom_navigation">96dp</dimen>
 </resources>

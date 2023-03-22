@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Homework2</string>
+    <string name="delete">Удалить</string>
+    <string name="search">Поиск</string>
+    <string name="Profile">Profile</string>
+    <string name="feed">Feed</string>
+    <string name="explore">Explore</string>
+
 </resources>

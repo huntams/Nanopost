@@ -40,6 +40,11 @@
         </ImageButton>
 
         <include
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/coordinator" />
+        <include
             android:id="@+id/prof_view_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
