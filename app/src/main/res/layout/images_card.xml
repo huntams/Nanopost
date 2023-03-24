@@ -16,12 +16,10 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Images"
+            android:text="@string/images"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             app:layout_constraintEnd_toStartOf="@+id/openImages"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,63 +31,54 @@
             android:id="@+id/openImages"
             android:layout_width="@dimen/open_images"
             android:layout_height="@dimen/open_images"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/chevron_right"
-            android:scaleType="centerInside"
+            android:background="@drawable/ic_chevron_right"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </ImageButton>
 
-        <ImageView
-            android:id="@+id/placeHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/media"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/textView"
 
-        </ImageView>
+            android:layout_marginTop="18dp">
 
-        <ImageView
-            android:id="@+id/placeHolder2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/media"
-            app:layout_constraintStart_toEndOf="@+id/placeHolder"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
-        </ImageView>
+                <ImageView
+                    android:id="@+id/placeHolder"
+                    android:layout_width="@dimen/placeholder_size"
+                    android:layout_height="@dimen/placeholder_size"
+                    android:src="@drawable/media" />
 
-        <ImageView
-            android:id="@+id/placeHolder3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/media"
-            app:layout_constraintStart_toEndOf="@+id/placeHolder2"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+                <ImageView
+                    android:id="@+id/placeHolder2"
+                    android:layout_width="@dimen/placeholder_size"
+                    android:layout_height="@dimen/placeholder_size"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/media" />
 
-        </ImageView>
+                <ImageView
+                    android:id="@+id/placeHolder3"
+                    android:layout_width="@dimen/placeholder_size"
+                    android:layout_height="@dimen/placeholder_size"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/media" />
 
-        <ImageView
-            android:id="@+id/placeHolder4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/media"
-            app:layout_constraintStart_toEndOf="@+id/placeHolder3"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        </ImageView>
-
+                <ImageView
+                    android:id="@+id/placeHolder4"
+                    android:layout_width="@dimen/placeholder_size"
+                    android:layout_height="@dimen/placeholder_size"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/media" />
+            </LinearLayout>
+        </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

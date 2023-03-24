@@ -117,7 +117,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/md_theme_dark_outline"
-                android:background="@color/cardview_dark_background"
                 app:strokeWidth="1dp">
 
             </com.google.android.material.imageview.ShapeableImageView>
@@ -129,7 +128,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/favorite">
+                android:src="@drawable/ic_favorite">
 
             </ImageView>
             <TextView
