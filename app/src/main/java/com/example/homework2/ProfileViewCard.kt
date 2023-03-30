@@ -1,7 +1,9 @@
 package com.example.homework2
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -15,9 +17,14 @@ class ProfileViewCard @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defAttrsSet: Int = 0
 ) : ConstraintLayout(context, attributeSet, defAttrsSet) {
-    private val binding by viewBinding(ProfileViewCardBinding::bind)
+    private lateinit var binding : ProfileViewCardBinding
 
     init {
+        binding = ProfileViewCardBinding.inflate(
+            LayoutInflater.from(context),
+            this,
+            true
+        )
         context.withStyledAttributes(
             attributeSet,
             R.styleable.ProfileViewCard, defAttrsSet, 0
@@ -40,8 +47,8 @@ class ProfileViewCard @JvmOverloads constructor(
             val postNumber = getString(R.styleable.ProfileViewCard_postNumber)?.let {
                     postNumber -> binding.date.text = postNumber
             }
-            val button = getString(R.styleable.ProfileViewCard_button)?.let{
-                button -> binding.button.setBackgroundColor(binding.button.currentTextColor)
+            val button = getColor(R.styleable.ProfileViewCard_button, Color.BLACK)?.let{
+                    button -> binding.button.setBackgroundColor(button)
             }
         }
     }
@@ -69,6 +76,6 @@ class ProfileViewCard @JvmOverloads constructor(
         binding.subscriberNumber.text = text
     }
     fun setButtonColor(@ColorInt imagesRes: Int){
-        binding.button.background = background
+        binding.button.setBackgroundColor(imagesRes)
     }
 }

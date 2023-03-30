@@ -7,6 +7,7 @@
     android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity"
@@ -38,6 +39,7 @@
             app:imageNumber="1"
             app:postNumber="2"
             app:subscriberNumber="3"
+            app:button="@color/design_default_color_primary_variant"
             />
 
         <include

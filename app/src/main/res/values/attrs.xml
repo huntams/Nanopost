@@ -4,7 +4,7 @@
         <attr name="title" format="string"/>
         <attr name="date" format="string"/>
         <attr name="image" format="reference"/>
-        <attr name="button" format="reference"/>
+        <attr name="button" format="reference|color"/>
         <attr name="imageNumber" format="string"/>
         <attr name="subscriberNumber" format="string"/>
         <attr name="postNumber" format="string"/>
