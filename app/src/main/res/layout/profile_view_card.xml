@@ -12,20 +12,18 @@
         android:layout_marginBottom="16dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image"
+            android:id="@+id/imageViewRounded"
             android:layout_width="@dimen/profile_image_size"
             android:layout_height="@dimen/profile_image_size"
             android:layout_margin="16dp"
             android:background="@color/md_theme_dark_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/RoundedImage">
-
-        </com.google.android.material.imageview.ShapeableImageView>
+            app:shapeAppearance="@style/RoundedImage" />
 
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -33,13 +31,13 @@
             android:maxLines="1"
             android:text="Evolitist"
             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/textViewDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -51,44 +49,42 @@
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
         <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/topDivider"
+            android:id="@+id/dividerTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             app:dividerColor="@color/md_theme_dark_surfaceVariant"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewRounded" />
 
         <TextView
-            android:id="@+id/imageNumber"
+            android:id="@+id/textViewImageNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:gravity=""
             android:text="12"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            app:layout_constraintEnd_toStartOf="@+id/subs"
+            app:layout_constraintEnd_toStartOf="@+id/textViewSubs"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topDivider">
-
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/dividerTop" />
 
         <TextView
-            android:id="@+id/images"
+            android:id="@+id/textViewImages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="images"
             android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-            app:layout_constraintEnd_toStartOf="@+id/subs"
+            app:layout_constraintEnd_toStartOf="@+id/textViewSubs"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageNumber" />
+            app:layout_constraintTop_toBottomOf="@id/textViewImageNumber" />
 
         <TextView
-            android:id="@+id/subscriberNumber"
+            android:id="@+id/textViewSubscriberNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -97,54 +93,51 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
 
-            app:layout_constraintTop_toBottomOf="@id/topDivider">
-
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/dividerTop" />
 
         <TextView
-            android:id="@+id/subs"
+            android:id="@+id/textViewSubs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="subscribers"
             android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subscriberNumber" />
+            app:layout_constraintTop_toBottomOf="@id/textViewSubscriberNumber" />
 
         <TextView
-            android:id="@+id/postNumber"
+            android:id="@+id/textViewPostNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="16"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/subs"
-            app:layout_constraintTop_toBottomOf="@id/topDivider">
+            app:layout_constraintStart_toEndOf="@id/textViewSubs"
+            app:layout_constraintTop_toBottomOf="@id/dividerTop" />
 
-        </TextView>
 
         <TextView
-            android:id="@+id/posts"
+            android:id="@+id/textViewPosts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="posts"
             android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/subs"
-            app:layout_constraintTop_toBottomOf="@id/postNumber" />
+            app:layout_constraintStart_toEndOf="@id/textViewSubs"
+            app:layout_constraintTop_toBottomOf="@id/textViewPostNumber" />
 
         <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/bottomDivider"
+            android:id="@+id/dividerBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             app:dividerColor="@color/md_theme_dark_surfaceVariant"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/posts" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewPosts" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonSubscribe"
             android:layout_width="match_parent"
             android:layout_height="@dimen/image_size"
             android:layout_margin="16dp"
@@ -153,6 +146,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottomDivider" />
+            app:layout_constraintTop_toTopOf="@+id/dividerBottom" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
