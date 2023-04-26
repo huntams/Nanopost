@@ -1,13 +1,12 @@
-package com.example.homework2.postViewCard
+package com.example.homework2.presentation.postViewCard
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.homework2.databinding.ActivityPostBinding
-import com.example.homework2.profile.DataProfile
+import com.example.homework2.data.DataProfile
 
 class PostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostBinding

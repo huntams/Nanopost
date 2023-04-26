@@ -1,4 +1,4 @@
-package com.example.homework2.imagesCard
+package com.example.homework2.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

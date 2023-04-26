@@ -1,14 +1,13 @@
-package com.example.homework2.imagesCard
+package com.example.homework2.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.homework2.databinding.ActivityImageBinding
 import com.example.homework2.databinding.ItemImageBinding
+import com.example.homework2.presentation.imagesCard.DataImagesCard
 
 class ImagesAdapter : ListAdapter<DataImagesCard, ImagesAdapter.DataViewHolder>(diffUtilCallback) {
 

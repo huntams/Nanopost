@@ -1,17 +1,15 @@
-package com.example.homework2.profile
-
-import android.provider.ContactsContract.Data
-import com.example.homework2.imagesCard.DataImagesCard
+package com.example.homework2.presentation.postViewCard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.homework2.databinding.ProfileViewCardBinding
+import coil.load
+import com.example.homework2.databinding.ViewCardBinding
+import com.example.homework2.data.DataProfile
 
-
-class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+class PostAdapter : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (DataProfile) -> Unit = {}
     fun setCallback(callback: (DataProfile) -> Unit) {
@@ -19,8 +17,7 @@ class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(d
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        val binding =
-            ProfileViewCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ViewCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
     }
 
@@ -29,13 +26,14 @@ class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(d
     }
 
     inner class DataViewHolder(
-        private val binding: ProfileViewCardBinding,
+        private val binding: ViewCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DataProfile) {
             with(binding) {
-
-                textViewName.text = item.title
+                textViewName.text = item.name
+                imageViewPostImage.load(item.link)
                 textViewDate.text = item.date
+                textViewPostText.text = item.title
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }

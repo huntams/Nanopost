@@ -1,18 +1,15 @@
-package com.example.homework2.postViewCard
+package com.example.homework2.presentation.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.homework2.databinding.ImagesCardBinding
+import com.example.homework2.data.DataProfile
 import com.example.homework2.databinding.ProfileViewCardBinding
-import com.example.homework2.databinding.ViewCardBinding
-import com.example.homework2.imagesCard.DataImagesCard
-import com.example.homework2.profile.DataProfile
 
-class PostAdapter : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUtilCallback) {
+
+class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (DataProfile) -> Unit = {}
     fun setCallback(callback: (DataProfile) -> Unit) {
@@ -20,7 +17,8 @@ class PostAdapter : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUti
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        val binding = ViewCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ProfileViewCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
     }
 
@@ -29,14 +27,13 @@ class PostAdapter : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUti
     }
 
     inner class DataViewHolder(
-        private val binding: ViewCardBinding,
+        private val binding: ProfileViewCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DataProfile) {
             with(binding) {
-                textViewName.text = item.name
-                imageViewPostImage.load(item.link)
+
+                textViewName.text = item.title
                 textViewDate.text = item.date
-                textViewPostText.text = item.title
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }

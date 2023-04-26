@@ -1,4 +1,4 @@
-package com.example.homework2.profile
+package com.example.homework2.presentation.profile
 
 import android.content.Context
 import android.graphics.Color
@@ -9,7 +9,6 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.R
 import com.example.homework2.databinding.ProfileViewCardBinding
 

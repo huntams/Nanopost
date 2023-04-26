@@ -1,4 +1,4 @@
-package com.example.homework2.profile
+package com.example.homework2.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

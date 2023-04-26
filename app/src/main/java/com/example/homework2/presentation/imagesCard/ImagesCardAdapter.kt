@@ -1,4 +1,4 @@
-package com.example.homework2
+package com.example.homework2.presentation.imagesCard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.databinding.ImagesCardBinding
-import com.example.homework2.databinding.ProfileViewCardBinding
-import com.example.homework2.imagesCard.DataImages
+import com.example.homework2.data.DataImages
 
 class ImagesCardAdapter :
     ListAdapter<DataImages, ImagesCardAdapter.DataViewHolder>(diffUtilCallback) {
@@ -44,7 +43,6 @@ class ImagesCardAdapter :
         }
     }
 }
-
 val diffUtilCallback = object : DiffUtil.ItemCallback<DataImages>() {
 
     override fun areContentsTheSame(oldItem: DataImages, newItem: DataImages): Boolean {
@@ -55,3 +53,4 @@ val diffUtilCallback = object : DiffUtil.ItemCallback<DataImages>() {
         return oldItem.id == newItem.id
     }
 }
+

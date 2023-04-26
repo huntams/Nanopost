@@ -1,15 +1,15 @@
-package com.example.homework2.imagesCard
+package com.example.homework2.presentation.imagesCard
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.homework2.databinding.ActivityImageBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
-
+@AndroidEntryPoint
 class ImageActivity : AppCompatActivity() {
 
     private val dataList = mutableListOf<DataImagesCard>().apply {
