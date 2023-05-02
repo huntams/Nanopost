@@ -6,13 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework2.data.DataProfile
+import com.example.homework2.data.model.Profile
 import com.example.homework2.databinding.ProfileViewCardBinding
+import javax.inject.Inject
 
 
-class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
 
-    private var onClick: (DataProfile) -> Unit = {}
-    fun setCallback(callback: (DataProfile) -> Unit) {
+    private var onClick: (Profile) -> Unit = {}
+    fun setCallback(callback: (Profile) -> Unit) {
         this.onClick = callback
     }
 
@@ -29,11 +31,11 @@ class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(d
     inner class DataViewHolder(
         private val binding: ProfileViewCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DataProfile) {
+        fun bind(item: Profile) {
             with(binding) {
 
-                textViewName.text = item.title
-                textViewDate.text = item.date
+                textViewName.text = item.username
+                textViewDate.text = item.bio
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }
@@ -43,13 +45,13 @@ class ProfileAdapter : ListAdapter<DataProfile, ProfileAdapter.DataViewHolder>(d
     }
 }
 
-val diffUtilCallback = object : DiffUtil.ItemCallback<DataProfile>() {
+val diffUtilCallback = object : DiffUtil.ItemCallback<Profile>() {
 
-    override fun areContentsTheSame(oldItem: DataProfile, newItem: DataProfile): Boolean {
+    override fun areContentsTheSame(oldItem: Profile, newItem: Profile): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: DataProfile, newItem: DataProfile): Boolean {
+    override fun areItemsTheSame(oldItem: Profile, newItem: Profile): Boolean {
         return oldItem.id == newItem.id
     }
 }

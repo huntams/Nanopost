@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.databinding.ImagesCardBinding
 import com.example.homework2.data.DataImages
+import javax.inject.Inject
 
-class ImagesCardAdapter :
+class ImagesCardAdapter @Inject constructor() :
     ListAdapter<DataImages, ImagesCardAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (DataImages) -> Unit = {}

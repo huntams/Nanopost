@@ -3,16 +3,16 @@ package com.example.homework2.presentation.imagesCard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.homework2.R
 import com.example.homework2.databinding.ActivityImageBinding
 import com.example.homework2.presentation.ImagesAdapter
-import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
-@AndroidEntryPoint
-class ImageActivity : AppCompatActivity() {
 
+class ImageFragment : Fragment(R.layout.activity_image) {
     private val dataList = mutableListOf<DataImagesCard>().apply {
         repeat(20) {
             add(
@@ -36,9 +36,10 @@ class ImageActivity : AppCompatActivity() {
             }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding = ActivityImageBinding.inflate(layoutInflater)
+        /*
         val data = intent.extras?.getParcelableArrayList<DataImagesCard>("ARG_LINK_KEY")
         with(binding) {
             imageAdapter.submitList(data)
@@ -46,7 +47,8 @@ class ImageActivity : AppCompatActivity() {
                 layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
                 adapter = imageAdapter
             }
-            setContentView(binding.root)
         }
+
+         */
     }
 }

@@ -14,23 +14,27 @@ import com.example.homework2.data.DataProfile
 import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
 import com.example.homework2.presentation.profile.ProfileAdapter
 import com.example.homework2.presentation.profile.ProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private fun createLink() = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
             Random.nextInt(1, 700).toString().padStart(3, '0') +
             ".png"
 
     private lateinit var binding: ActivityMainBinding
-    private val profAdapter by lazy {
-        ProfileAdapter()
-    }
-    private val imageAdapter by lazy {
-        ImagesCardAdapter()
-    }
-    private val postAdapter by lazy {
-        PostAdapter()
-    }
+
+    @Inject
+    lateinit var profAdapter: ProfileAdapter
+
+    @Inject
+    lateinit var postAdapter: PostAdapter
+
+    @Inject
+    lateinit var imageAdapter: ImagesCardAdapter
+
     private val dataList = listOf(
 
         DataProfile(
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             link = createLink()
         )
     )
-    private val viewModel  by viewModels<ProfileViewModel>()
+    private val viewModel by viewModels<ProfileViewModel>()
     private val link = mutableListOf<String>()
     private val dataListImage =
         DataImages(
@@ -74,8 +78,10 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
-        viewModel.profileLiveData.observe()
-        profAdapter.submitList(dataList.toList())
+        viewModel.getProfile()
+        viewModel.profileLiveData.observe(this) {
+            profAdapter.submitList(mutableListOf(it))
+        }
         imageAdapter.apply {
             setCallback {
                 startActivity(ImageActivity.createIntent(this@MainActivity, dataImage))

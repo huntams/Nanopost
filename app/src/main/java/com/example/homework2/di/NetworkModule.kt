@@ -16,17 +16,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkModule {
+object NetworkModule {
 
 
-    companion object {
-        private const val BASE_URL = "https://nanopost.evolitist.com/"
-    }
+    private const val BASE_URL = "https://nanopost.evolitist.com/"
+
 
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
-        val json = Json{ignoreUnknownKeys = true}
+        val json = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))

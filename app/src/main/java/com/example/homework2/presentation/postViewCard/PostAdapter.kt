@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.databinding.ViewCardBinding
 import com.example.homework2.data.DataProfile
+import javax.inject.Inject
 
-class PostAdapter : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUtilCallback) {
+class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (DataProfile) -> Unit = {}
     fun setCallback(callback: (DataProfile) -> Unit) {

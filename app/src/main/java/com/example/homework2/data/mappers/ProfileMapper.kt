@@ -3,7 +3,9 @@ package com.example.homework2.data.mappers
 import com.example.homework2.data.model.Profile
 import com.example.homework2.data.remote.model.ApiProfile
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ProfileMapper @Inject constructor() {
 
     fun apiToModel(apiProfile: ApiProfile) = Profile(
