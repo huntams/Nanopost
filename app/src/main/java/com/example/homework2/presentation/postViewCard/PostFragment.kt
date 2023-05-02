@@ -12,12 +12,13 @@ import com.example.homework2.R
 import com.example.homework2.data.DataProfile
 import com.example.homework2.databinding.ActivityPostBinding
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PostFragment : Fragment(R.layout.activity_post) {
-    private lateinit var binding: ActivityPostBinding
+    private val binding by viewBinding(ActivityPostBinding:: bind)
 
     companion object {
         fun createIntent(context: Context, data: DataProfile) =
@@ -28,7 +29,6 @@ class PostFragment : Fragment(R.layout.activity_post) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ActivityPostBinding.inflate(layoutInflater)
         /*
         val data = intent.extras?.getParcelable<DataProfile>("ARG_TEXT_KEY")
         with(binding) {
