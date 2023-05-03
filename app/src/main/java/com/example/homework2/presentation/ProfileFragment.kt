@@ -16,6 +16,7 @@ import com.example.homework2.presentation.imagesCard.ImageActivity
 import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
 import com.example.homework2.presentation.postViewCard.PostActivity
 import com.example.homework2.presentation.postViewCard.PostAdapter
+import com.example.homework2.presentation.postViewCard.PostPagingAdapter
 import com.example.homework2.presentation.profile.ProfileAdapter
 import com.example.homework2.presentation.profile.ProfileViewModel
 import javax.inject.Inject
@@ -33,6 +34,8 @@ class ProfileFragment : Fragment() {
 
     @Inject
     lateinit var postAdapter: PostAdapter
+    @Inject
+    lateinit var postPagingAdapter: PostPagingAdapter
 
     @Inject
     lateinit var imageAdapter: ImagesCardAdapter
@@ -44,7 +47,7 @@ class ProfileFragment : Fragment() {
             link = createLink()
         )
     )
-    private val viewModel by viewModels<ProfileViewModel>()
+    private val viewModel by viewModels<FeedViewModel>()
     private val link = mutableListOf<String>()
     private val dataListImage =
         DataImages(
@@ -77,8 +80,9 @@ class ProfileFragment : Fragment() {
             }
         }
         viewModel.getProfile()
-        viewModel.profileLiveData.observe(viewLifecycleOwner) {
-            profAdapter.submitList(mutableListOf(it))
+
+        viewModel.postLiveData.observe(viewLifecycleOwner) {
+            postPagingAdapter.submitData(viewLifecycleOwner.lifecycle,it)
         }
         imageAdapter.apply {
             setCallback {

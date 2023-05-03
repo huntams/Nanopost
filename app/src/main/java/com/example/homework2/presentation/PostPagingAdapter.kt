@@ -2,18 +2,16 @@ package com.example.homework2.presentation.postViewCard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.homework2.databinding.ViewCardBinding
-import com.example.homework2.data.DataProfile
 import javax.inject.Inject
 
-class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.DataViewHolder>(diffUtilCallback) {
+class PostPagingAdapter @Inject constructor() : PagingDataAdapter<Post, PostPagingAdapter.DataViewHolder>(diffUtilCallback) {
 
-    private var onClick: (DataProfile) -> Unit = {}
-    fun setCallback(callback: (DataProfile) -> Unit) {
+    private var onClick: (Post) -> Unit = {}
+    fun setCallback(callback: (Post) -> Unit) {
         this.onClick = callback
     }
 
@@ -23,18 +21,15 @@ class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.D
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+        getItem(position)?.let{
+            holder.bind(it)
+        }}
 
     inner class DataViewHolder(
         private val binding: ViewCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DataProfile) {
+        fun bind(item: Post) {
             with(binding) {
-                textViewName.text = item.name
-                imageViewPostImage.load(item.link)
-                textViewDate.text = item.date
-                textViewPostText.text = item.title
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }
@@ -44,13 +39,13 @@ class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.D
     }
 }
 
-private val diffUtilCallback = object : DiffUtil.ItemCallback<DataProfile>() {
+private val diffUtilCallback = object : DiffUtil.ItemCallback<Post>() {
 
-    override fun areContentsTheSame(oldItem: DataProfile, newItem: DataProfile): Boolean {
+    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: DataProfile, newItem: DataProfile): Boolean {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id
     }
 }

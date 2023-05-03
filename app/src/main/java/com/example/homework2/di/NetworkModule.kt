@@ -59,6 +59,8 @@ object NetworkModule {
             .build()
     }
 
+    @Provides
+    @Singleton
     fun provideJsonConverter() : Converter.Factory{
         return Json {
             ignoreUnknownKeys= true }.asConverterFactory("application/json".toMediaType())
@@ -68,6 +70,7 @@ object NetworkModule {
     fun provideNanopostApiService(retrofit: Retrofit): NanopostApiService {
         return retrofit.create()
     }
+
 
     @Provides
     @Singleton
