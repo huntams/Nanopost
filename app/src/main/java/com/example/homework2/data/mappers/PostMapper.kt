@@ -8,7 +8,7 @@ import javax.inject.Singleton
 class PostMapper @Inject constructor() {
 
 
-    fun apiToModel(apiPost: ApiPost<Post>) = Post(
+    fun apiToModel(apiPost: ApiPost) = Post(
         id = apiPost.id,
         text = apiPost.text,
     )

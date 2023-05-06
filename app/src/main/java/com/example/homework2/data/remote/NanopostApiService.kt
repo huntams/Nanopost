@@ -19,7 +19,7 @@ interface NanopostApiService {
         @Path("profileId") profileId : String,
         @Query("count") count : Int,
         @Query("Offset") offset : String?,
-    ) : ApiPost<Post>
+    ) : ApiPost
     @GET("api/v1/profile/{profileId}")
     suspend fun getProfile(
         @Path("profileId") profileId: String,

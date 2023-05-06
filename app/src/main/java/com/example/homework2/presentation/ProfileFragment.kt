@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.data.DataImages
 import com.example.homework2.data.DataProfile
+import com.example.homework2.data.remote.ResultLoader
 import com.example.homework2.databinding.ActivityMainBinding
 import com.example.homework2.databinding.ProfileFragmentBinding
 import com.example.homework2.presentation.imagesCard.DataImagesCard
@@ -97,7 +98,15 @@ class ProfileFragment : Fragment() {
             submitList(dataList.toList())
         }
         binding.recyclerView.adapter = ConcatAdapter(profAdapter, imageAdapter, postAdapter)
+        with(viewModel){
+            getProfile()
+            postLiveData.observe(viewLifecycleOwner){result->
+                when(result){
+                    is ResultLoader.Failure-> TODO()
 
+                }
+            }
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 }

@@ -9,6 +9,7 @@ import com.example.homework2.data.mappers.ProfileMapper
 import com.example.homework2.data.model.Profile
 import com.example.homework2.data.pagging.PostPagingSource
 import com.example.homework2.data.remote.NanopostApiService
+import com.example.homework2.data.remote.model.ApiPost
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class ProfileRepositoryImpl @Inject constructor(
         return profileMapper.apiToModel(apiService.getProfile(profileId))
     }
 
-    override suspend fun getProfilePosts(): Flow<PagingData<Post>> {
+    override suspend fun getProfilePosts(): Flow<PagingData<ApiPost>> {
         return Pager(
             config = PagingConfig(30, enablePlaceholders = false),
             pagingSourceFactory = { PostPagingSource(apiService) },
