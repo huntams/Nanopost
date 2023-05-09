@@ -4,4 +4,7 @@
     <string name="subscribe">subscribe</string>
     <string name="images">Images</string>
     <string name="Profile">Profile</string>
+    <string name="Evolitist">Evolitist</string>
+    <string name="Posts">Posts</string>
+    <string name="subscribers">Subscribers</string>
 </resources>

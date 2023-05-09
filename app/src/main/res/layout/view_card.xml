@@ -10,57 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp">
-        <FrameLayout
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewRounded"
             android:layout_width="@dimen/image_size"
             android:layout_height="@dimen/image_size"
             android:layout_margin="16dp"
+            android:background="@color/md_theme_dark_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/image">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageRounded"
-                android:layout_width="@dimen/image_size"
-                android:layout_height="@dimen/image_size"
-                app:shapeAppearance="@style/RoundedImage"
-                tools:background="@color/md_theme_dark_primary">
+            app:shapeAppearance="@style/RoundedImage" />
 
-            </com.google.android.material.imageview.ShapeableImageView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="E"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:gravity="center">
 
-            </TextView>
-        </FrameLayout>
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Evolitist"
+            android:text="@string/Evolitist"
             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintBottom_toTopOf="@+id/textViewDate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/textViewDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Apr 1, 2022 20:00:04"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
@@ -69,12 +58,10 @@
             android:layout_marginTop="16dp"
             app:dividerColor="@color/md_theme_dark_surfaceVariant"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date">
-
-        </com.google.android.material.divider.MaterialDivider>
+            app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewPostText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -84,12 +71,10 @@
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/divider">
-
-        </TextView>
+            app:layout_constraintTop_toTopOf="@+id/divider" />
 
         <ImageView
-            android:id="@+id/placeHolder"
+            android:id="@+id/imageViewPostImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -97,51 +82,44 @@
             android:src="@drawable/image_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/textViewPostText" />
 
-        </ImageView>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="74dp"
-            android:layout_height="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/placeHolder"
-            android:layout_margin="16dp"
-            >
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/favorite"
+                android:id="@+id/shapeableImageViewFavorite"
                 android:layout_width="74dp"
                 android:layout_height="28dp"
+                android:layout_margin="16dp"
                 android:scaleType="center"
-                app:shapeAppearance="@style/RoundedImage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPostImage"
+                app:shapeAppearance="@style/RoundedImage"
                 app:strokeColor="@color/md_theme_dark_outline"
                 app:strokeWidth="1dp">
 
             </com.google.android.material.imageview.ShapeableImageView>
+
             <ImageView
-                android:id="@+id/favoriteImage"
+                android:id="@+id/imageViewFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/ic_favorite">
+                android:scaleType="center"
+                android:src="@drawable/ic_favorite"
+                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite"/>
 
-            </ImageView>
             <TextView
-                android:id="@+id/favoriteNumber"
+                android:id="@+id/textViewFavoriteNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/favoriteImage"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="8dp"
                 android:text="1"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                app:layout_constraintStart_toEndOf="@+id/imageViewFavorite"
+                app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

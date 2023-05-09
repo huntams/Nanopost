@@ -17,6 +17,7 @@ class ProfileViewCard @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defAttrsSet: Int = 0
 ) : ConstraintLayout(context, attributeSet, defAttrsSet) {
+
     private lateinit var binding : ProfileViewCardBinding
 
     init {
@@ -29,53 +30,59 @@ class ProfileViewCard @JvmOverloads constructor(
             attributeSet,
             R.styleable.ProfileViewCard, defAttrsSet, 0
         ) {
-            val title = getString(R.styleable.ProfileViewCard_title)?.let {
-                    title ->binding.name.text = title
+            val title = getString(R.styleable.ProfileViewCard_title)?.let { title ->
+                binding.textViewName.text = title
             }
-            val subtitle = getString(R.styleable.ProfileViewCard_date)?.let {
-                    subtitle -> binding.date.text = subtitle
+            val subtitle = getString(R.styleable.ProfileViewCard_date)?.let { subtitle ->
+                binding.textViewDate.text = subtitle
             }
-            val image = getDrawable(R.styleable.ProfileViewCard_image)?.let {
-                    image -> binding.image.setImageDrawable(image)
+            val image = getDrawable(R.styleable.ProfileViewCard_image)?.let { image ->
+                binding.imageViewRounded.setImageDrawable(image)
             }
-            val imageNumber = getString(R.styleable.ProfileViewCard_imageNumber)?.let {
-                    imageNumber -> binding.date.text = imageNumber
+            val imageNumber =
+                getString(R.styleable.ProfileViewCard_imageNumber)?.let { imageNumber ->
+                    binding.textViewImageNumber.text = imageNumber
+                }
+            val subscriberNumber =
+                getString(R.styleable.ProfileViewCard_subscriberNumber)?.let { subscriberNumber ->
+                    binding.textViewSubscriberNumber.text = subscriberNumber
+                }
+            val postNumber = getString(R.styleable.ProfileViewCard_postNumber)?.let { postNumber ->
+                binding.textViewPostNumber.text = postNumber
             }
-            val subscriberNumber = getString(R.styleable.ProfileViewCard_subscriberNumber)?.let {
-                    subscriberNumber -> binding.date.text = subscriberNumber
-            }
-            val postNumber = getString(R.styleable.ProfileViewCard_postNumber)?.let {
-                    postNumber -> binding.date.text = postNumber
-            }
-            val button = getColor(R.styleable.ProfileViewCard_button, Color.BLACK)?.let{
-                    button -> binding.button.setBackgroundColor(button)
+            val button = getColor(R.styleable.ProfileViewCard_button, Color.BLACK).let { button ->
+                binding.buttonSubscribe.setBackgroundColor(button)
             }
         }
     }
 
     fun setTitle(text: String) {
-        binding.name.text = text
+        binding.textViewName.text = text
     }
 
     fun setDate(text: String) {
-        binding.date.text = text
+        binding.textViewDate.text = text
     }
 
     fun setImage(@DrawableRes imagesRes: Int) {
-        binding.image.setImageDrawable(
+        binding.imageViewRounded.setImageDrawable(
             ContextCompat.getDrawable(context, imagesRes)
         )
     }
+
     fun setImageNumber(text: String) {
-        binding.imageNumber.text = text
+        binding.textViewImageNumber.text = text
     }
+
     fun setSubsNumber(text: String) {
-        binding.postNumber.text = text
+        binding.textViewPostNumber.text = text
     }
+
     fun setPostNumber(text: String) {
-        binding.subscriberNumber.text = text
+        binding.textViewSubscriberNumber.text = text
     }
-    fun setButtonColor(@ColorInt imagesRes: Int){
-        binding.button.setBackgroundColor(imagesRes)
+
+    fun setButtonColor(@ColorInt imagesRes: Int) {
+        binding.buttonSubscribe.setBackgroundColor(imagesRes)
     }
 }
