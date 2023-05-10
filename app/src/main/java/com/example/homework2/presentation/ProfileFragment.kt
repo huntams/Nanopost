@@ -3,6 +3,10 @@ package com.example.homework2.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -28,13 +32,14 @@ class ProfileFragment : Fragment() {
             Random.nextInt(1, 700).toString().padStart(3, '0') +
             ".png"
 
-    private val binding by viewBinding(ProfileFragmentBinding:: bind)
+    private val binding by viewBinding(ProfileFragmentBinding::bind)
 
     @Inject
     lateinit var profAdapter: ProfileAdapter
 
     @Inject
     lateinit var postAdapter: PostAdapter
+
     @Inject
     lateinit var postPagingAdapter: PostPagingAdapter
 
@@ -69,6 +74,7 @@ class ProfileFragment : Fragment() {
             )
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         dataImage.apply {
@@ -83,7 +89,7 @@ class ProfileFragment : Fragment() {
         viewModel.getProfile()
 
         viewModel.postLiveData.observe(viewLifecycleOwner) {
-            postPagingAdapter.submitData(viewLifecycleOwner.lifecycle,it)
+            postPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
         imageAdapter.apply {
             setCallback {
@@ -98,15 +104,31 @@ class ProfileFragment : Fragment() {
             submitList(dataList.toList())
         }
         binding.recyclerView.adapter = ConcatAdapter(profAdapter, imageAdapter, postAdapter)
-        with(viewModel){
+        with(viewModel) {
             getProfile()
-            postLiveData.observe(viewLifecycleOwner){result->
-                when(result){
-                    is ResultLoader.Failure-> TODO()
+            postLiveData.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ResultLoader.Failure<*> -> TODO()
 
                 }
             }
         }
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            binding.root.updatePadding(
+                bottom = imeInsets.top
+            )
+            WindowInsetsCompat.Builder()
+                .setInsets(
+                    WindowInsetsCompat.Type.ime(),
+                    Insets.of(
+                        imeInsets.left, 0, imeInsets.right,
+                        imeInsets.bottom
+                    )
+                ).build()
+
+        }
     }
 }

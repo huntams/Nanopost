@@ -17,7 +17,7 @@ import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PostFragment : Fragment(R.layout.activity_post) {
+class   PostFragment : Fragment(R.layout.activity_post) {
     private val binding by viewBinding(ActivityPostBinding:: bind)
 
     companion object {

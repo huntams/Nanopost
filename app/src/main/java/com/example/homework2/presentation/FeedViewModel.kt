@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.example.homework2.data.remote.model.ApiPost
 import com.example.homework2.domain.GetProfilePostsUseCase
 import com.example.homework2.domain.GetProfileUseCase
 import kotlinx.coroutines.launch
@@ -16,8 +17,8 @@ class FeedViewModel @Inject constructor(
     private val getProfilePostsUseCase: GetProfilePostsUseCase
 ) : ViewModel() {
 
-    private val _postLiveData = MutableLiveData< PagingData<Post>>()
-    val postLiveData : LiveData<PagingData<Post>> = _postLiveData
+    private val _postLiveData = MutableLiveData< PagingData<ApiPost>>()
+    val postLiveData : LiveData<PagingData<ApiPost>> = _postLiveData
 
     fun getProfile(){
         viewModelScope.launch {

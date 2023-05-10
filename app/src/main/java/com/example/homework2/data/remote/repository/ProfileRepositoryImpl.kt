@@ -28,9 +28,9 @@ class ProfileRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(30, enablePlaceholders = false),
             pagingSourceFactory = { PostPagingSource(apiService) },
-        ).flow.map { pagingdata ->
-            pagingdata.map {
-                postMapper.apiToModel(apiService.getProfilePosts(profileId = it.id, count = it.count, offset = it.offset))
+        ).flow.map {
+            it.map {
+                postMapper.apiToModel(apiService.getPost())
             }
 
         }

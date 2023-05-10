@@ -1,5 +1,6 @@
 package com.example.homework2.data.mappers
 
+import com.example.homework2.data.model.Profile
 import com.example.homework2.data.remote.model.ApiPost
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,5 +13,6 @@ class PostMapper @Inject constructor() {
         id = apiPost.id,
         text = apiPost.text,
     )
+
 
 }
