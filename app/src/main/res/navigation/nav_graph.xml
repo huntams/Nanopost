@@ -2,12 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/hilt_MainActivity">
+    app:startDestination="@id/profileFragment">
 
-    <activity
-        android:id="@+id/hilt_MainActivity"
-        android:name="com.example.homework2.presentation.Hilt_MainActivity"
-        android:label="Hilt_MainActivity" />
+
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.example.homework2.presentation.imagesCard.ImageFragment"
@@ -16,4 +13,15 @@
         android:id="@+id/postFragment"
         android:name="com.example.homework2.presentation.postViewCard.PostFragment"
         android:label="PostFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.homework2.presentation.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_postFragment"
+            app:destination="@id/postFragment" />
+    </fragment>
 </navigation>

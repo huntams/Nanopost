@@ -7,11 +7,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.R
 import com.example.homework2.databinding.ActivityImageBinding
 import com.example.homework2.presentation.ImagesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class ImageFragment : Fragment(R.layout.activity_image) {
     private val dataList = mutableListOf<DataImagesCard>().apply {
         repeat(20) {
@@ -27,18 +30,16 @@ class ImageFragment : Fragment(R.layout.activity_image) {
     private val imageAdapter by lazy {
         ImagesAdapter()
     }
-    private lateinit var binding: ActivityImageBinding
-
+    private val binding by viewBinding(ActivityImageBinding ::bind)
     companion object {
         fun createIntent(context: Context, data: ArrayList<DataImagesCard>) =
-            Intent(context, ImageActivity::class.java).apply {
+            Intent(context, ImageFragment::class.java).apply {
                 putExtra("ARG_LINK_KEY", data)
             }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ActivityImageBinding.inflate(layoutInflater)
         /*
         val data = intent.extras?.getParcelableArrayList<DataImagesCard>("ARG_LINK_KEY")
         with(binding) {
