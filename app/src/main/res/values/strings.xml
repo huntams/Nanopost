@@ -7,4 +7,7 @@
     <string name="Back">Back</string>
     <string name="more">More</string>
     <string name="Post">Post</string>
+    <string name="Nanopost">NanoPost</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
 </resources>
