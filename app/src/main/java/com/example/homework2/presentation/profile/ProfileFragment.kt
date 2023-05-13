@@ -72,7 +72,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        super.onViewCreated(view, savedInstanceState)
         dataImage.apply {
             repeat(10) {
                 add(
@@ -105,7 +105,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postAdapter)
 
-        super.onViewCreated(view, savedInstanceState)
+
 
         Log.i("client",client.toString())
     }

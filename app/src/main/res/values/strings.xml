@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Homework2</string>
+    <string name="app_name">NanoPost</string>
     <string name="exit">Exit</string>
     <string name="subscribe">subscribe</string>
     <string name="images">Images</string>
@@ -7,4 +7,8 @@
     <string name="Back">Back</string>
     <string name="more">More</string>
     <string name="Post">Post</string>
+    <string name="new_post">New post…</string>
+    <string name="add_image">Add image…</string>
+    <string name="search">Search</string>
+    <string name="accept">Accept</string>
 </resources>
