@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.homework2.presentation.AuthFragment"
+        android:name="com.example.homework2.presentation.auth.AuthFragment"
         android:label="AuthFragment" >
         <action
             android:id="@+id/action_authFragment_to_profileFragment"

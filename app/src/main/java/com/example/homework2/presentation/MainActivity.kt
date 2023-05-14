@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val prefsStorage = PrefsStorage(this)
         if(prefsStorage.token== null){
         }
-        val client = OkHttpClient.Builder()
-            .addInterceptor(ChuckerInterceptor(this))
-            .build()
-        Log.i("client",client.toString())
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

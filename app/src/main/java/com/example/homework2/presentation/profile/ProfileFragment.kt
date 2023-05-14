@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -82,10 +83,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 )
             }
         }
-        val client = OkHttpClient.Builder()
-            .addInterceptor(ChuckerInterceptor(requireContext()))
-            .build()
-        viewModel.getProfile()
+
+        viewModel.getProfile("huntams")
         viewModel.profileLiveData.observe(viewLifecycleOwner) {
             profiles.add(it)
             profAdapter.submitList(profiles)
@@ -106,7 +105,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postAdapter)
 
         super.onViewCreated(view, savedInstanceState)
-
-        Log.i("client",client.toString())
+        /*
+        val navGraph = findNavController().navInflater.inflate(R.navigation.nav_graph)
+        navGraph.setStartDestination(R.id.profileFragment)
+        findNavController().graph = navGraph
+         */
     }
 }

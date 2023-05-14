@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -16,32 +18,38 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameTextInputLayout"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginVertical="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameTextInputEditText"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="username"
-            android:drawableEnd="@drawable/ic_vision"
             android:hint="@string/username" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTextInputLayout"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:errorEnabled="true"
+
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTextInputEditText"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:backgroundTint="@color/design_default_color_error"
-            android:drawableEnd="@drawable/ic_error"
             android:hint="@string/password" />
     </com.google.android.material.textfield.TextInputLayout>
 
