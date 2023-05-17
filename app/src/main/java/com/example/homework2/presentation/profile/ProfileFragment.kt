@@ -1,15 +1,15 @@
 package com.example.homework2.presentation.profile
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.homework2.R
 import com.example.homework2.data.DataImages
 import com.example.homework2.data.DataProfile
@@ -19,9 +19,9 @@ import com.example.homework2.presentation.imagesCard.DataImagesCard
 import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
 import com.example.homework2.presentation.postViewCard.PostAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.OkHttpClient
 import javax.inject.Inject
 import kotlin.random.Random
+
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -83,7 +83,25 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 )
             }
         }
+        val builder =  AlertDialog.Builder(requireContext())
 
+        builder.setMessage("Вы уверены, что хотите выйти?")
+        builder.setCancelable(true)
+        builder.setTitle("Выход")
+        builder.setPositiveButton("Принять",DialogInterface.OnClickListener(){
+            dialog, which ->
+            //val bundle = Bundle()
+            //val navOptions = NavOptions.Builder()
+            //    .setPopUpTo(R.id.postFragment, false,true)
+            //    .build()
+            findNavController().graph.setStartDestination(R.id.authFragment)
+            //findNavController().setGraph(graph = findNavController().graph.setStartDestination(R.id.authFragment), )
+            findNavController().navigate(R.id.action_profileFragment_to_postFragment)
+
+        })
+        builder.setNegativeButton("Отмена",DialogInterface.OnClickListener(){
+            dialog, which ->
+        })
         viewModel.getProfile("huntams")
         viewModel.profileLiveData.observe(viewLifecycleOwner) {
             profiles.add(it)
@@ -102,8 +120,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
             submitList(dataList.toList())
         }
+        binding.toolbar.setOnMenuItemClickListener {
+            builder.create().show()
+            true
+        }
         binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postAdapter)
-
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToPostFragment()
+            )
+                //AuthFragmentDirections.actionAuthFragmentToProfileFragment()
+        }
         super.onViewCreated(view, savedInstanceState)
         /*
         val navGraph = findNavController().navInflater.inflate(R.navigation.nav_graph)

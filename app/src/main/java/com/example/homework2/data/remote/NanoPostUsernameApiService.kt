@@ -10,8 +10,5 @@ import com.example.homework2.data.remote.model.ApiResult
 interface NanoPostUsernameApiService {
 
 
-    @GET("/api/auth/checkUsername")
-    suspend fun checkUsername(
-        @Query("username") username: String
-    ) : ApiResult
+
 }

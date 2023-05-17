@@ -1,5 +1,8 @@
 package com.example.homework2.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.remote.NanoPostUsernameApiService
 import com.example.homework2.data.remote.NanopostApiService
@@ -8,6 +11,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -31,8 +35,6 @@ object NetworkModule {
     @Qualifier
     annotation class AuthClient
 
-    @Qualifier
-    annotation class CheckClient
 
     @Provides
     @Singleton
@@ -50,21 +52,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        httpClient: OkHttpClient,
-        json: Converter.Factory,
-    ): Retrofit {
-
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(httpClient)
-            .addConverterFactory(json)
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    @CheckClient
-    fun provideCheckRetrofit(
         httpClient: OkHttpClient,
         json: Converter.Factory,
     ): Retrofit {
@@ -98,13 +85,6 @@ object NetworkModule {
         return retrofit.create()
     }
 
-    @Provides
-    @Singleton
-    fun provideNanopostCheckApiService(
-        @CheckClient retrofit: Retrofit,
-    ): NanoPostUsernameApiService {
-        return retrofit.create()
-    }
 
     @Provides
     @Singleton
@@ -114,9 +94,10 @@ object NetworkModule {
         return Interceptor { chain ->
             val request = chain.request().newBuilder()
 
+
             request.addHeader(
-                "Authorization33",
-                "Beare ${prefsStorage.token}"
+                "Authorization3",
+                "Bearer ${prefsStorage.token}"
             )
             chain.proceed(request.build())
         }
@@ -125,9 +106,17 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideHttpClient(
-        authInterceptor: Interceptor
+        authInterceptor: Interceptor,
+        @ApplicationContext context: Context,
     ): OkHttpClient {
-        return OkHttpClient().newBuilder().addInterceptor(authInterceptor).build()
+        return OkHttpClient().newBuilder().addInterceptor(
+            ChuckerInterceptor.Builder(context)
+                .collector(ChuckerCollector(context))
+                .maxContentLength(250000L)
+                .redactHeaders(emptySet())
+                .alwaysReadResponseBody(false)
+                .build()
+        ).addInterceptor(authInterceptor).build()
     }
 
 

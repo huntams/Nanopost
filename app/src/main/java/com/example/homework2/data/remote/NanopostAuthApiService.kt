@@ -1,5 +1,6 @@
 package com.example.homework2.data.remote
 
+import com.example.homework2.data.remote.model.ApiResult
 import com.example.homework2.data.remote.model.ApiToken
 import com.example.homework2.data.remote.model.RegistrationRequest
 import retrofit2.http.Body
@@ -19,4 +20,8 @@ interface NanopostAuthApiService {
         @Query("username") username: String,
         @Query("password") password: String,
     ) : ApiToken
+    @GET("/api/auth/checkUsername")
+    suspend fun checkUsername(
+        @Query("username") username: String
+    ) : ApiResult
 }

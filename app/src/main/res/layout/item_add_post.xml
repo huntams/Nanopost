@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:longClickable="true"
+    app:cardCornerRadius="12dp">
+    <ImageView
+        android:id="@+id/closeAddImageView"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNote" />
+
+    <Button
+        android:id="@+id/buttonClose"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_cancel"
+        android:backgroundTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="@+id/closeAddImageView"
+        app:layout_constraintTop_toTopOf="@+id/closeAddImageView" />
+</com.google.android.material.card.MaterialCardView>

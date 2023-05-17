@@ -1,6 +1,7 @@
 package com.example.homework2.presentation.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,8 +54,6 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                     }
                 } else {
                     if (passwordTextInputEditText.length() >= 8) {
-                        if (prefs?.token?.isNotEmpty() == true)
-                            prefs.token = ""
                         if ("Free" == viewModel.usernameLiveData.value)
                             viewModel.getToken(
                                 registrationRequest = RegistrationRequest(
@@ -67,16 +66,22 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 username = usernameTextInputEditText.text.toString(),
                                 password = passwordTextInputEditText.text.toString()
                             )
-                        viewModel.usernameLiveData.observe(viewLifecycleOwner) {
+                        viewModel.getToken(
+                            username = usernameTextInputEditText.text.toString(),
+                            password = passwordTextInputEditText.text.toString()
+                        )
+                        viewModel.tokenLiveData.observe(viewLifecycleOwner) {
+                            Log.i("${prefs?.token}", it)
                             prefs?.token = it
                         }
+                        findNavController().graph.setStartDestination(R.id.profileFragment)
+                        findNavController().clearBackStack(R.id.authFragment)
                         findNavController().navigate(
                             AuthFragmentDirections.actionAuthFragmentToProfileFragment()
                         )
-
                     } else
                         passwordTextInputLayout.error =
-                            "имя пользователя должно быть больше 7 символов"
+                            "Пароль должен быть больше 7 символов"
                 }
             }
         }

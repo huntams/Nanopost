@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if(prefsStorage.token== null){
         }
 
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }

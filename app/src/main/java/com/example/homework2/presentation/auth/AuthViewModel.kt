@@ -1,5 +1,6 @@
 package com.example.homework2.presentation.auth
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,16 +24,30 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val _usernameLiveData = MutableLiveData<String>()
     val usernameLiveData: LiveData<String> = _usernameLiveData
+    private val _tokenLiveData = MutableLiveData<String>()
+    val tokenLiveData: LiveData<String> = _tokenLiveData
 
     fun getToken(username: String, password: String) {
         viewModelScope.launch {
-            _usernameLiveData.postValue(getTokenLoginUseCase.execute(username,password).token)
+
+            getTokenLoginUseCase.execute(username, password).also {
+                Log.i(it.token, "work")
+                _tokenLiveData.postValue(it.token)
+            }
+            _tokenLiveData.postValue(getTokenLoginUseCase.execute(username, password).token)
+            Log.i("${_tokenLiveData.value}", "work")
         }
     }
 
     fun getToken(registrationRequest: RegistrationRequest) {
         viewModelScope.launch {
-            _usernameLiveData.postValue(getTokenUseCase.execute(registrationRequest).token)
+            //Log.i(getTokenUseCase.execute(registrationRequest).token, "work")
+            getTokenUseCase.execute(registrationRequest).also {
+                Log.i(it.token, "work")
+                _tokenLiveData.postValue(it.token)
+            }
+            //_tokenLiveData.postValue(getTokenUseCase.execute(registrationRequest).token)
+
         }
     }
 
