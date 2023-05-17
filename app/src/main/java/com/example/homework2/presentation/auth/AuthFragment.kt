@@ -3,6 +3,7 @@ package com.example.homework2.presentation.auth
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -14,16 +15,19 @@ import com.example.homework2.data.remote.model.RegistrationRequest
 import com.example.homework2.databinding.AuthorizationFragmentBinding
 import com.example.homework2.presentation.profile.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(R.layout.authorization_fragment) {
 
-    private val prefs = context?.let { PrefsStorage(it) }
+    //private val prefs = context?.let { PrefsStorage(it) }
     private val viewModel by viewModels<AuthViewModel>()
     private val binding by viewBinding(AuthorizationFragmentBinding::bind)
     private var free = false
-
+    @Inject
+    lateinit var prefs : PrefsStorage
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
 
         with(binding) {
             continueButton.setOnClickListener {
@@ -66,19 +70,25 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 username = usernameTextInputEditText.text.toString(),
                                 password = passwordTextInputEditText.text.toString()
                             )
-                        viewModel.getToken(
-                            username = usernameTextInputEditText.text.toString(),
-                            password = passwordTextInputEditText.text.toString()
-                        )
+
+                        viewModel.usernameLiveData.observe(viewLifecycleOwner){
+                            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+                            prefs.token = it
+                        }
                         viewModel.tokenLiveData.observe(viewLifecycleOwner) {
-                            Log.i("${prefs?.token}", it)
-                            prefs?.token = it
+                            prefs.token = it
+                            prefs.username = usernameTextInputEditText.text.toString()
+                            Log.i("username", prefs.token.toString())
+
+                            prefs.username = usernameTextInputEditText.text.toString()
+                            Log.i("username", prefs.token.toString())
                         }
                         findNavController().graph.setStartDestination(R.id.profileFragment)
                         findNavController().clearBackStack(R.id.authFragment)
                         findNavController().navigate(
                             AuthFragmentDirections.actionAuthFragmentToProfileFragment()
                         )
+
                     } else
                         passwordTextInputLayout.error =
                             "Пароль должен быть больше 7 символов"

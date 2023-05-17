@@ -13,6 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.R
 import com.example.homework2.data.DataImages
 import com.example.homework2.data.DataProfile
+import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.model.Profile
 import com.example.homework2.databinding.FragmentProfileBinding
 import com.example.homework2.presentation.imagesCard.DataImagesCard
@@ -28,12 +29,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun createLink() = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
             Random.nextInt(1, 700).toString().padStart(3, '0') +
             ".png"
-
+    //private val prefs = context?.let { PrefsStorage(it) }
     private val profiles = mutableListOf<Profile>(
 
     )
     private val binding by viewBinding(FragmentProfileBinding:: bind)
 
+    @Inject
+    lateinit var prefs : PrefsStorage
     @Inject
     lateinit var profAdapter: ProfileAdapter
 
@@ -87,7 +90,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         builder.setMessage("Вы уверены, что хотите выйти?")
         builder.setCancelable(true)
-        builder.setTitle("Выход")
+        builder.setTitle("${prefs.token}")
         builder.setPositiveButton("Принять",DialogInterface.OnClickListener(){
             dialog, which ->
             //val bundle = Bundle()

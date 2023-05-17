@@ -29,12 +29,8 @@ class AuthViewModel @Inject constructor(
 
     fun getToken(username: String, password: String) {
         viewModelScope.launch {
+            _tokenLiveData.postValue(getTokenLoginUseCase.execute(username,password).token)
 
-            getTokenLoginUseCase.execute(username, password).also {
-                Log.i(it.token, "work")
-                _tokenLiveData.postValue(it.token)
-            }
-            _tokenLiveData.postValue(getTokenLoginUseCase.execute(username, password).token)
             Log.i("${_tokenLiveData.value}", "work")
         }
     }
