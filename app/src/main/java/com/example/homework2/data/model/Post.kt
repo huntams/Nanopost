@@ -8,6 +8,6 @@ data class Post(
     val id: String,
     val text: String?,
     val images: List<ApiImage>,
-    val dateCreated: Int?,
+    val dateCreated: Long?,
     val likes: ApiLike,
 )

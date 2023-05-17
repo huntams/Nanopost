@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
@@ -19,7 +20,9 @@ import com.example.homework2.databinding.FragmentProfileBinding
 import com.example.homework2.presentation.imagesCard.DataImagesCard
 import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
 import com.example.homework2.presentation.postViewCard.PostAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.annotation.Inherited
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -41,6 +44,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     lateinit var profAdapter: ProfileAdapter
 
 
+    @Inject
+    lateinit var postPagingAdapter: PostPagingAdapter
     @Inject
     lateinit var postAdapter: PostAdapter
 
@@ -86,8 +91,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 )
             }
         }
-        val builder =  AlertDialog.Builder(requireContext())
+        val builder =  MaterialAlertDialogBuilder(requireContext())
 
+
+        viewModel.getProfilePosts()
+        postPagingAdapter.apply {
+        viewModel.postsLiveData.observe(viewLifecycleOwner){
+
+            submitData(viewLifecycleOwner.lifecycle,it)}
+        }
         builder.setMessage("Вы уверены, что хотите выйти?")
         builder.setCancelable(true)
         builder.setTitle("${prefs.token}")
@@ -127,7 +139,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             builder.create().show()
             true
         }
-        binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postAdapter)
+        binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postPagingAdapter)
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToPostFragment()

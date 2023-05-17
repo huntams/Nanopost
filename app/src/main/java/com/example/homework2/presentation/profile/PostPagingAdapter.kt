@@ -31,6 +31,7 @@ class PostPagingAdapter @Inject constructor() : PagingDataAdapter<Post, PostPagi
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Post) {
             with(binding) {
+
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }

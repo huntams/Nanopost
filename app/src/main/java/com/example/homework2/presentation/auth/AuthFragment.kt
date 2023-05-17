@@ -73,10 +73,8 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
 
                         viewModel.usernameLiveData.observe(viewLifecycleOwner){
                             Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-                            prefs.token = it
                         }
                         viewModel.tokenLiveData.observe(viewLifecycleOwner) {
-                            prefs.token = it
                             prefs.username = usernameTextInputEditText.text.toString()
                             Log.i("username", prefs.token.toString())
 

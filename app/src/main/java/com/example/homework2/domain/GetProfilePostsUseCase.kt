@@ -9,10 +9,10 @@ import javax.inject.Inject
 class GetProfilePostsUseCase @Inject constructor(
     private val repository: ProfileRepository,
 ) {
-/*
+
     suspend fun execute() : Flow<PagingData<Post>> {
         return repository.getProfilePosts()
     }
 
- */
+
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.model.Profile
 import com.example.homework2.data.remote.model.RegistrationRequest
 import com.example.homework2.domain.CheckUsernameUseCase
@@ -27,10 +28,11 @@ class AuthViewModel @Inject constructor(
     private val _tokenLiveData = MutableLiveData<String>()
     val tokenLiveData: LiveData<String> = _tokenLiveData
 
+    @Inject
+    lateinit var prefs : PrefsStorage
     fun getToken(username: String, password: String) {
         viewModelScope.launch {
-            _tokenLiveData.postValue(getTokenLoginUseCase.execute(username,password).token)
-
+            prefs.token = getTokenLoginUseCase.execute(username,password).token
             Log.i("${_tokenLiveData.value}", "work")
         }
     }
@@ -38,10 +40,7 @@ class AuthViewModel @Inject constructor(
     fun getToken(registrationRequest: RegistrationRequest) {
         viewModelScope.launch {
             //Log.i(getTokenUseCase.execute(registrationRequest).token, "work")
-            getTokenUseCase.execute(registrationRequest).also {
-                Log.i(it.token, "work")
-                _tokenLiveData.postValue(it.token)
-            }
+            prefs.token = getTokenUseCase.execute(registrationRequest).token
             //_tokenLiveData.postValue(getTokenUseCase.execute(registrationRequest).token)
 
         }

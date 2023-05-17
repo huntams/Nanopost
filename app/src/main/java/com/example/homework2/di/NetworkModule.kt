@@ -96,7 +96,7 @@ object NetworkModule {
 
 
             request.addHeader(
-                "Authorization3",
+                "Authorization",
                 "Bearer ${prefsStorage.token}"
             )
             chain.proceed(request.build())
