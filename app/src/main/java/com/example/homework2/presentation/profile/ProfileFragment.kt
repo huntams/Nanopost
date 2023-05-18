@@ -22,6 +22,8 @@ import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
 import com.example.homework2.presentation.postViewCard.PostAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
+import kotlinx.serialization.builtins.serializer
 import java.lang.annotation.Inherited
 import javax.inject.Inject
 import kotlin.random.Random
@@ -32,20 +34,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun createLink() = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
             Random.nextInt(1, 700).toString().padStart(3, '0') +
             ".png"
+
     //private val prefs = context?.let { PrefsStorage(it) }
     private val profiles = mutableListOf<Profile>(
 
     )
-    private val binding by viewBinding(FragmentProfileBinding:: bind)
+    private val binding by viewBinding(FragmentProfileBinding::bind)
 
     @Inject
-    lateinit var prefs : PrefsStorage
+    lateinit var prefs: PrefsStorage
+
     @Inject
     lateinit var profAdapter: ProfileAdapter
 
 
     @Inject
     lateinit var postPagingAdapter: PostPagingAdapter
+
     @Inject
     lateinit var postAdapter: PostAdapter
 
@@ -80,6 +85,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         dataImage.apply {
@@ -91,37 +97,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 )
             }
         }
-        val builder =  MaterialAlertDialogBuilder(requireContext())
+        val builder = MaterialAlertDialogBuilder(requireContext())
 
-
-        viewModel.getProfilePosts()
-        postPagingAdapter.apply {
-        viewModel.postsLiveData.observe(viewLifecycleOwner){
-
-            submitData(viewLifecycleOwner.lifecycle,it)}
-        }
         builder.setMessage("Вы уверены, что хотите выйти?")
         builder.setCancelable(true)
-        builder.setTitle("${prefs.token}")
-        builder.setPositiveButton("Принять",DialogInterface.OnClickListener(){
-            dialog, which ->
-            //val bundle = Bundle()
-            //val navOptions = NavOptions.Builder()
-            //    .setPopUpTo(R.id.postFragment, false,true)
-            //    .build()
+        builder.setTitle("Выход")
+        builder.setPositiveButton("Принять", DialogInterface.OnClickListener() { dialog, which ->
             findNavController().graph.setStartDestination(R.id.authFragment)
-            //findNavController().setGraph(graph = findNavController().graph.setStartDestination(R.id.authFragment), )
             findNavController().navigate(R.id.action_profileFragment_to_postFragment)
 
         })
-        builder.setNegativeButton("Отмена",DialogInterface.OnClickListener(){
-            dialog, which ->
+        builder.setNegativeButton("Отмена", DialogInterface.OnClickListener() { dialog, which ->
         })
-        viewModel.getProfile("huntams")
+        viewModel.getProfile(prefs.username.toString())
         viewModel.profileLiveData.observe(viewLifecycleOwner) {
-            profiles.add(it)
-            profAdapter.submitList(profiles)
-        //profAdapter.submitList(mutableListOf(it))
+            profAdapter.submitList(mutableListOf(it))
+            //profAdapter.submitList(mutableListOf(it))
+        }
+        viewModel.getProfilePosts(prefs.username.toString())
+
+        viewModel.postsLiveData.observe(viewLifecycleOwner) {
+            postPagingAdapter.apply {
+                submitData(viewLifecycleOwner.lifecycle, it)
+            }
         }
         imageAdapter.apply {
             setCallback {
@@ -139,12 +137,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             builder.create().show()
             true
         }
-        binding.recyclerView.adapter = ConcatAdapter(profAdapter,imageAdapter, postPagingAdapter)
+        binding.recyclerView.adapter = ConcatAdapter(profAdapter, imageAdapter, postPagingAdapter)
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileFragmentToPostFragment()
             )
-                //AuthFragmentDirections.actionAuthFragmentToProfileFragment()
+            //AuthFragmentDirections.actionAuthFragmentToProfileFragment()
         }
         super.onViewCreated(view, savedInstanceState)
         /*

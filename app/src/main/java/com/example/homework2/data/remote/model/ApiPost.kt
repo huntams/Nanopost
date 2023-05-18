@@ -1,14 +1,15 @@
 package com.example.homework2.data.remote.model
 
-import com.example.homework2.data.model.Image
+
 
 
 @kotlinx.serialization.Serializable
 data class ApiPost(
     val id: String,
-    val text: String?,
+    val owner: ApiProfileCompact,
+    val dateCreated: Long,
+    val text: String? = null,
     val images : List<ApiImage>,
-    val dateCreated: Long?,
     val likes : ApiLike,
 
 )

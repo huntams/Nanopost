@@ -7,6 +7,6 @@ import com.example.homework2.data.model.ProfileCompact
 data class ApiImage(
     val id: String,
     val owner: ApiProfileCompact,
-    val dateCreated: String,
+    val dateCreated: Long,
     val sizes: List<ApiImageSize>,
 )

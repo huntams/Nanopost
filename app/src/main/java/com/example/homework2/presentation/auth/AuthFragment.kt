@@ -40,6 +40,7 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 usernameTextInputLayout.isErrorEnabled = false
                                 usernameTextInputLayout.isEnabled = false
                                 passwordTextInputLayout.visibility = View.VISIBLE
+                                prefs.username = usernameTextInputEditText.text.toString()
                             }
 
                             "TooLong" -> usernameTextInputLayout.error =
@@ -70,17 +71,6 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 username = usernameTextInputEditText.text.toString(),
                                 password = passwordTextInputEditText.text.toString()
                             )
-
-                        viewModel.usernameLiveData.observe(viewLifecycleOwner){
-                            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
-                        }
-                        viewModel.tokenLiveData.observe(viewLifecycleOwner) {
-                            prefs.username = usernameTextInputEditText.text.toString()
-                            Log.i("username", prefs.token.toString())
-
-                            prefs.username = usernameTextInputEditText.text.toString()
-                            Log.i("username", prefs.token.toString())
-                        }
                         findNavController().graph.setStartDestination(R.id.profileFragment)
                         findNavController().clearBackStack(R.id.authFragment)
                         findNavController().navigate(

@@ -95,10 +95,10 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getProfilePosts(): Flow<PagingData<Post>> {
+    override suspend fun getProfilePosts(username : String): Flow<PagingData<Post>> {
         return Pager(
             config = PagingConfig(30, enablePlaceholders = false),
-            pagingSourceFactory = { PostPagingSource(apiService) },
+            pagingSourceFactory = { PostPagingSource(apiService,username) },
         ).flow.map { pagingdata ->
             pagingdata.map {
                 postMapper.apiToModel(it)

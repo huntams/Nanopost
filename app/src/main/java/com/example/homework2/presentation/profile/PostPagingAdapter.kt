@@ -1,15 +1,18 @@
 package com.example.homework2.presentation.profile
 
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.homework2.data.model.Post
 import com.example.homework2.databinding.ViewCardBinding
 import javax.inject.Inject
 
-class PostPagingAdapter @Inject constructor() : PagingDataAdapter<Post, PostPagingAdapter.DataViewHolder>(diffUtilCallback) {
+class PostPagingAdapter @Inject constructor() :
+    PagingDataAdapter<Post, PostPagingAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (Post) -> Unit = {}
     fun setCallback(callback: (Post) -> Unit) {
@@ -22,16 +25,21 @@ class PostPagingAdapter @Inject constructor() : PagingDataAdapter<Post, PostPagi
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        getItem(position)?.let{
+        getItem(position)?.let {
             holder.bind(it)
-        }}
+        }
+    }
 
     inner class DataViewHolder(
         private val binding: ViewCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Post) {
             with(binding) {
+                textViewPostText.text = item.text
+                textViewFavoriteNumber.text = item.likes.likesCount.toString()
+                textViewName.text = item.id
 
+                textViewDate.text = item.dateCreated.toString()
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }
@@ -40,6 +48,7 @@ class PostPagingAdapter @Inject constructor() : PagingDataAdapter<Post, PostPagi
         }
     }
 }
+
 private val diffUtilCallback = object : DiffUtil.ItemCallback<Post>() {
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {

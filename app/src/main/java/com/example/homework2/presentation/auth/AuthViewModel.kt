@@ -25,15 +25,12 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val _usernameLiveData = MutableLiveData<String>()
     val usernameLiveData: LiveData<String> = _usernameLiveData
-    private val _tokenLiveData = MutableLiveData<String>()
-    val tokenLiveData: LiveData<String> = _tokenLiveData
 
     @Inject
     lateinit var prefs : PrefsStorage
     fun getToken(username: String, password: String) {
         viewModelScope.launch {
             prefs.token = getTokenLoginUseCase.execute(username,password).token
-            Log.i("${_tokenLiveData.value}", "work")
         }
     }
 

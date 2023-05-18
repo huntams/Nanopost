@@ -10,8 +10,8 @@ class GetProfilePostsUseCase @Inject constructor(
     private val repository: ProfileRepository,
 ) {
 
-    suspend fun execute() : Flow<PagingData<Post>> {
-        return repository.getProfilePosts()
+    suspend fun execute(username : String) : Flow<PagingData<Post>> {
+        return repository.getProfilePosts(username)
     }
 
 

@@ -14,5 +14,5 @@ interface ProfileRepository {
     suspend fun getToken(registrationRequest: RegistrationRequest): ApiToken
     suspend fun checkUsername(username: String): ApiResult
     suspend fun getProfile(profileId: String): Profile
-    suspend fun getProfilePosts(): Flow<PagingData<Post>>
+    suspend fun getProfilePosts(username : String): Flow<PagingData<Post>>
 }

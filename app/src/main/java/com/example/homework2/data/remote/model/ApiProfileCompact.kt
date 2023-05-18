@@ -5,7 +5,7 @@ package com.example.homework2.data.remote.model
 data class ApiProfileCompact(
     val id : String,
     val username : String,
-    val displayName : String?,
-    val avatarUrl : String?,
+    val displayName : String? = null,
+    val avatarUrl : String? = null,
     val subscribed : Boolean,
 )
