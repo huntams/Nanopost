@@ -13,72 +13,75 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewImages"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:paddingBottom="18dp"
             android:text="@string/images"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            app:layout_constraintEnd_toStartOf="@+id/openImages"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonOpenImages"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/openImages"
+            android:id="@+id/imageButtonOpenImages"
             android:layout_width="@dimen/open_images"
             android:layout_height="@dimen/open_images"
             android:background="@drawable/ic_chevron_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/textViewImages"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageView
+            android:id="@+id/placeHolderFirst"
+            android:layout_width="@dimen/placeholder_size"
+            android:layout_height="@dimen/placeholder_size"
+            android:src="@drawable/media"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/placeHolderSecond"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImages"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/placeHolderSecond"
+            android:layout_width="@dimen/placeholder_size"
+            android:layout_height="@dimen/placeholder_size"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/media"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/placeHolderThird"
+            app:layout_constraintStart_toEndOf="@id/placeHolderFirst"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImages"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/placeHolderThird"
+            android:layout_width="@dimen/placeholder_size"
+            android:layout_height="@dimen/placeholder_size"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/media"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/placeHolderFourth"
+            app:layout_constraintStart_toEndOf="@id/placeHolderSecond"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImages"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/placeHolderFourth"
+            android:layout_width="@dimen/placeholder_size"
+            android:layout_height="@dimen/placeholder_size"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/media"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-
-            android:layout_marginTop="18dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/placeHolder"
-                    android:layout_width="@dimen/placeholder_size"
-                    android:layout_height="@dimen/placeholder_size"
-                    android:src="@drawable/media" />
-
-                <ImageView
-                    android:id="@+id/placeHolder2"
-                    android:layout_width="@dimen/placeholder_size"
-                    android:layout_height="@dimen/placeholder_size"
-                    android:layout_marginStart="8dp"
-                    android:src="@drawable/media" />
-
-                <ImageView
-                    android:id="@+id/placeHolder3"
-                    android:layout_width="@dimen/placeholder_size"
-                    android:layout_height="@dimen/placeholder_size"
-                    android:layout_marginStart="8dp"
-                    android:src="@drawable/media" />
-
-                <ImageView
-                    android:id="@+id/placeHolder4"
-                    android:layout_width="@dimen/placeholder_size"
-                    android:layout_height="@dimen/placeholder_size"
-                    android:layout_marginStart="8dp"
-                    android:src="@drawable/media" />
-            </LinearLayout>
-        </HorizontalScrollView>
+            app:layout_constraintStart_toEndOf="@id/placeHolderThird"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImages"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
