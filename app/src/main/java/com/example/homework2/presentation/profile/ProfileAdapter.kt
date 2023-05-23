@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.R
 import com.example.homework2.data.DataProfile
+import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.model.Profile
 import com.example.homework2.databinding.ProfileViewCardBinding
 import javax.inject.Inject
 
 
-class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+class ProfileAdapter @Inject constructor() :
+    ListAdapter<Profile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+
+    @Inject
+    lateinit var prefs: PrefsStorage
 
     private var onClick: (Profile) -> Unit = {}
     fun setCallback(callback: (Profile) -> Unit) {
@@ -37,14 +42,32 @@ class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter
         fun bind(item: Profile) {
             with(binding) {
 
-                textViewName.text = item.username
+                if (item.username == prefs.username.toString())
+                    buttonSubscribe.text = "Edit"
+                else {
+                    if (!item.subscribed)
+                        buttonSubscribe.text = "subscribe"
+                    else
+                        buttonSubscribe.text = "unsubscribe"
+                }
+                if(item.displayName?.isNotEmpty() == true)
+                    textViewName.text = item.displayName
+                else
+                    textViewName.text = item.username
                 textViewDate.text = item.bio
                 textViewPostNumber.text = item.postsCount.toString()
                 textViewSubscriberNumber.text = item.subscribersCount.toString()
-                textViewImageNumber.text =item.imagesCount.toString()
+                textViewImageNumber.text = item.imagesCount.toString()
                 imageViewRounded.load(item.avatarSmall)
-                root.setOnClickListener {
+                buttonSubscribe.setOnClickListener {
+                    if (item.subscribed)
+                        buttonSubscribe.text = "subscribe"
+                    else
+                        buttonSubscribe.text = "unsubscribe"
                     onClick.invoke(item)
+                }
+                root.setOnClickListener {
+                    //onClick.invoke(item)
                 }
             }
 

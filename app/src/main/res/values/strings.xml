@@ -14,4 +14,8 @@
     <string name="add_image">Add image…</string>
     <string name="search">Search</string>
     <string name="accept">Accept</string>
+    <string name="feed">Feed</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="bio">About you</string>
 </resources>

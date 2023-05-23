@@ -1,8 +1,6 @@
-package com.example.homework2.presentation.profile
+package com.example.homework2.presentation.feed
 
 import android.icu.text.SimpleDateFormat
-import android.opengl.Visibility
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +14,8 @@ import com.example.homework2.databinding.ViewCardBinding
 import java.util.Date
 import javax.inject.Inject
 
-class PostPagingAdapter @Inject constructor() :
-    PagingDataAdapter<Post, PostPagingAdapter.DataViewHolder>(diffUtilCallback) {
+class FeedPagingAdapter @Inject constructor() :
+    PagingDataAdapter<Post, FeedPagingAdapter.DataViewHolder>(diffUtilCallback) {
 
     private var onClick: (Post) -> Unit = {}
     fun setCallback(callback: (Post) -> Unit) {
@@ -44,6 +42,9 @@ class PostPagingAdapter @Inject constructor() :
                 textViewFavoriteNumber.text = item.likes.likesCount.toString()
                 textViewName.text = item.owner.username
                 imageViewRounded.load(item.owner.avatarUrl)
+                root.setOnClickListener {
+                    onClick.invoke(item)
+                }
                 shapeableImageViewFavorite.setOnClickListener {
                     onClick.invoke(item)
                 }
@@ -51,15 +52,9 @@ class PostPagingAdapter @Inject constructor() :
                     imageViewPostImage.load(item.images[0].sizes[0].url)
                 } catch (e: Exception) {
                     imageViewPostImage.visibility = View.GONE
-                    Log.i(e.message, item.images.size.toString())
                 }
 
-
-                textViewDate.text =
-                    SimpleDateFormat("MMMM d,yyyy H:mm:s").format(Date(item.dateCreated))
-                root.setOnClickListener {
-                    onClick.invoke(item)
-                }
+                textViewDate.text = SimpleDateFormat("MMMM d,yyyy H:mm:s").format(Date(item.dateCreated))
             }
 
         }

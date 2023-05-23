@@ -6,14 +6,19 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.homework2.data.PrefsStorage
+import com.example.homework2.data.mappers.ImageMapper
 import com.example.homework2.data.mappers.PostMapper
 import com.example.homework2.data.mappers.ProfileMapper
+import com.example.homework2.data.model.Image
 import com.example.homework2.data.model.Post
 import com.example.homework2.data.model.Profile
+import com.example.homework2.data.pagging.FeedPagingSource
+import com.example.homework2.data.pagging.ImagePagingSource
 import com.example.homework2.data.pagging.PostPagingSource
 import com.example.homework2.data.remote.NanopostApiService
 import com.example.homework2.data.remote.NanopostAuthApiService
 import com.example.homework2.data.remote.model.ApiResult
+import com.example.homework2.data.remote.model.ApiResultResponse
 import com.example.homework2.data.remote.model.ApiToken
 import com.example.homework2.data.remote.model.RegistrationRequest
 import kotlinx.coroutines.flow.Flow
@@ -27,9 +32,11 @@ class ProfileRepositoryImpl @Inject constructor(
     private val apiService: NanopostApiService,
     private val profileMapper: ProfileMapper,
     private val postMapper: PostMapper,
+    private val imageMapper: ImageMapper,
     private val authApiService: NanopostAuthApiService,
     private val prefStorage: PrefsStorage
 ) : ProfileRepository {
+
 
 
     override suspend fun getToken(username: String, password: String): ApiToken {
@@ -38,6 +45,26 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun getToken(registrationRequest: RegistrationRequest): ApiToken {
         return authApiService.register(registrationRequest)
+    }
+
+    override suspend fun subscribe(username: String): ApiResultResponse {
+        return apiService.subscribe(username)
+    }
+
+    override suspend fun unsubscribe(username: String): ApiResultResponse {
+        return apiService.unsubscribe(username)
+    }
+
+    override suspend fun getImages(username: String): Flow<PagingData<Image>> {
+        return Pager(
+            config = PagingConfig(30, enablePlaceholders = false),
+            pagingSourceFactory = { ImagePagingSource(apiService, username) },
+        ).flow.map { pagingdata ->
+            pagingdata.map {
+                imageMapper.apiToModel(it)
+            }
+
+        }
     }
 
     override suspend fun getProfile(profileId: String): Profile {
@@ -94,11 +121,47 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun editProfile(
+        profileId: String,
+        displayName: String?,
+        bio: String?,
+        avatar: ByteArray?
+    ): ApiResultResponse {
+        var image: MultipartBody.Part? = null
+        avatar?.let {
+            image = MultipartBody.Part.createFormData(
+                "avatar",
+                "avatar.jpg",
+                it.toRequestBody("image/*".toMediaType())
+            )
+        }
+        return apiService.editProfile(
+            profileId = profileId,
+            displayName = displayName?.toRequestBody(),
+            bio = bio?.toRequestBody(),
+            avatar = image
+        )
+    }
+    override suspend fun getPost(postId: String): Post {
+        return postMapper.apiToModel(apiService.getPost(postId))
+    }
 
-    override suspend fun getProfilePosts(username : String): Flow<PagingData<Post>> {
+    override suspend fun getFeed(): Flow<PagingData<Post>> {
         return Pager(
             config = PagingConfig(30, enablePlaceholders = false),
-            pagingSourceFactory = { PostPagingSource(apiService,username) },
+            pagingSourceFactory = { FeedPagingSource(apiService) },
+        ).flow.map { pagingdata ->
+            pagingdata.map {
+                postMapper.apiToModel(it)
+            }
+
+        }
+    }
+
+    override suspend fun getProfilePosts(username: String): Flow<PagingData<Post>> {
+        return Pager(
+            config = PagingConfig(30, enablePlaceholders = false),
+            pagingSourceFactory = { PostPagingSource(apiService, username) },
         ).flow.map { pagingdata ->
             pagingdata.map {
                 postMapper.apiToModel(it)

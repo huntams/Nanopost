@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".presentation.MainActivity">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,7 +29,7 @@
             android:layout_margin="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Evolitist"
+            android:text="@string/username"
             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
             app:layout_constraintBottom_toTopOf="@+id/textViewDate"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,48 +83,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPostText" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageViewFavorite"
             android:layout_width="74dp"
             android:layout_height="28dp"
             android:layout_margin="16dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPostImage">
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPostImage"
+            app:shapeAppearance="@style/RoundedImage"
+            app:strokeColor="@color/md_theme_dark_outline"
+            app:strokeWidth="1dp">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/shapeableImageViewFavorite"
-                android:layout_width="74dp"
-                android:layout_height="28dp"
-                android:scaleType="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/RoundedImage"
-                app:strokeColor="@color/md_theme_dark_outline"
-                app:strokeWidth="1dp">
+        </com.google.android.material.imageview.ShapeableImageView>
 
-            </com.google.android.material.imageview.ShapeableImageView>
+        <ImageView
+            android:id="@+id/imageViewFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite"
+            app:layout_constraintStart_toStartOf="@+id/shapeableImageViewFavorite"
+            app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite" />
 
-            <ImageView
-                android:id="@+id/imageViewFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:scaleType="center"
-                android:src="@drawable/ic_favorite"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewFavoriteNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="1"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewFavorite"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <TextView
+            android:id="@+id/textViewFavoriteNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginStart="8dp"
+            android:text="1"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite"
+            app:layout_constraintStart_toEndOf="@+id/imageViewFavorite"
+            app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

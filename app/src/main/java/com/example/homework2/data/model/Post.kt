@@ -2,12 +2,14 @@ package com.example.homework2.data.model
 
 import com.example.homework2.data.remote.model.ApiImage
 import com.example.homework2.data.remote.model.ApiLike
+import com.example.homework2.data.remote.model.ApiProfileCompact
 
 
 data class Post(
     val id: String,
-    val text: String?,
-    val images: List<ApiImage>,
+    val owner: ApiProfileCompact,
     val dateCreated: Long,
-    val likes: ApiLike,
+    val text: String? = null,
+    val images : List<ApiImage>,
+    val likes : ApiLike,
 )

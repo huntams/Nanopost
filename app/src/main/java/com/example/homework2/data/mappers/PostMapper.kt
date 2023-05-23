@@ -12,6 +12,7 @@ class PostMapper @Inject constructor() {
 
     fun apiToModel(apiPost: ApiPost) = Post(
         id = apiPost.id,
+        owner= apiPost.owner,
         text = apiPost.text,
         dateCreated = apiPost.dateCreated,
         images = apiPost.images,

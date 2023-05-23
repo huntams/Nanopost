@@ -37,12 +37,15 @@ class AddPostAdapter @Inject constructor() : ListAdapter<pickerData, AddPostAdap
             with(binding) {
                 closeAddImageView.setImageURI(item.uri)
                 buttonClose.setOnClickListener {
-                    notifyItemRemoved(position)
+                    onClick.invoke(item)
                 }
                 //closeAddImageView.setImageURI()
+                /*
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }
+
+                 */
             }
 
         }

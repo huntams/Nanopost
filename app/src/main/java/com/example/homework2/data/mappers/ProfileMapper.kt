@@ -20,7 +20,7 @@ class ProfileMapper @Inject constructor() {
         subscribersCount = apiProfile.subscribersCount,
         postsCount = apiProfile.postsCount,
         imagesCount = apiProfile.imagesCount,
-        //images = apiProfile.images
+        images = apiProfile.images
 
         )
 }

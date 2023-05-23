@@ -32,7 +32,7 @@ class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.D
         fun bind(item: DataProfile) {
             with(binding) {
                 textViewName.text = item.name
-                imageViewPostImage.load(item.link)
+                //imageViewPostImage.load(item.link)
                 textViewDate.text = item.date
                 textViewPostText.text = item.title
                 root.setOnClickListener {

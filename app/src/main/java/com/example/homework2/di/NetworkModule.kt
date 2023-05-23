@@ -4,7 +4,6 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.homework2.data.PrefsStorage
-import com.example.homework2.data.remote.NanoPostUsernameApiService
 import com.example.homework2.data.remote.NanopostApiService
 import com.example.homework2.data.remote.NanopostAuthApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

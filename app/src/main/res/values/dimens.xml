@@ -6,4 +6,5 @@
     <dimen name="exit_image">36dp</dimen>
     <dimen name="placeholder_size">80dp</dimen>
     <dimen name="image_item_size">125dp</dimen>
+    <dimen name="post_image_size">412dp</dimen>
 </resources>

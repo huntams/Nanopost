@@ -20,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AuthFragment : Fragment(R.layout.authorization_fragment) {
 
-    //private val prefs = context?.let { PrefsStorage(it) }
+
     private val viewModel by viewModels<AuthViewModel>()
     private val binding by viewBinding(AuthorizationFragmentBinding::bind)
     private var free = false
@@ -71,10 +71,9 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 username = usernameTextInputEditText.text.toString(),
                                 password = passwordTextInputEditText.text.toString()
                             )
-                        findNavController().graph.setStartDestination(R.id.profileFragment)
                         findNavController().clearBackStack(R.id.authFragment)
                         findNavController().navigate(
-                            AuthFragmentDirections.actionAuthFragmentToProfileFragment()
+                            AuthFragmentDirections.actionAuthFragmentToFeed()
                         )
 
                     } else

@@ -63,6 +63,7 @@ class PostFragment : Fragment(R.layout.fragment_add_post) {
         super.onViewCreated(view, savedInstanceState)
 
 
+        var count = 1
         /*
         val data = intent.extras?.getParcelable<DataProfile>("ARG_TEXT_KEY")
         with(binding) {
@@ -78,10 +79,15 @@ class PostFragment : Fragment(R.layout.fragment_add_post) {
         with(binding) {
             buttonAddImage.setOnClickListener {
 
-                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                Toast.makeText(context, pickMedia.toString(), Toast.LENGTH_SHORT).show()
+                if (count != 4) {
+                    count += 1
+                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    Toast.makeText(context, pickMedia.toString(), Toast.LENGTH_SHORT).show()
+                }
                 recyclerView.adapter = postAdapter.apply {
                     setCallback {
+
+                        count -= 1
                         //listUri.remove(it.uri)
                     }
                 }
