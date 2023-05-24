@@ -56,7 +56,7 @@ class PostPagingAdapter @Inject constructor() :
 
 
                 textViewDate.text =
-                    SimpleDateFormat("MMMM d,yyyy H:mm:s").format(Date(item.dateCreated))
+                    SimpleDateFormat("d MMMM, yyyy H:mm:s").format(Date(item.dateCreated))
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }

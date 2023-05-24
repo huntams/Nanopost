@@ -10,6 +10,8 @@ import androidx.paging.cachedIn
 import com.example.homework2.data.model.Image
 import com.example.homework2.data.model.Post
 import com.example.homework2.data.model.Profile
+import com.example.homework2.domain.DeleteImageUseCase
+import com.example.homework2.domain.GetImageUseCase
 import com.example.homework2.domain.GetImagesUseCase
 import com.example.homework2.domain.GetProfilePostsUseCase
 import com.example.homework2.domain.GetProfileUseCase
@@ -22,11 +24,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ImageViewModel @Inject constructor(
-    private val getImagesUseCase: GetImagesUseCase
+    private val getImagesUseCase: GetImagesUseCase,
+    private val getImageUseCase: GetImageUseCase,
+    private val deleteImageUseCase: DeleteImageUseCase
 ) : ViewModel() {
     private val _imagesLiveData = MutableLiveData<PagingData<Image>>()
     val imagesLiveData: LiveData<PagingData<Image>> = _imagesLiveData
+    private val _imageLiveData = MutableLiveData<Image>()
+    val imageLiveData: LiveData<Image> = _imageLiveData
 
+    fun getImage(imageId : String){
+        viewModelScope.launch {
+            getImageUseCase.execute(imageId).also {
+                _imageLiveData.postValue(it)
+            }
+        }
+    }
+    fun deleteImage(imageId: String){
+        viewModelScope.launch {
+            deleteImageUseCase.execute(imageId)
+        }
+    }
     fun getImages(username: String){
         viewModelScope.launch {
             getImagesUseCase.execute(username).cachedIn(this).also { flow ->

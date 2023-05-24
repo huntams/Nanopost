@@ -54,7 +54,7 @@ class FeedPagingAdapter @Inject constructor() :
                     imageViewPostImage.visibility = View.GONE
                 }
 
-                textViewDate.text = SimpleDateFormat("MMMM d,yyyy H:mm:s").format(Date(item.dateCreated))
+                textViewDate.text = SimpleDateFormat("d MMMM, yyyy H:mm:s").format(Date(item.dateCreated))
             }
 
         }

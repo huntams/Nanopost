@@ -2,6 +2,9 @@ package com.example.homework2.presentation.profile
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -16,6 +19,7 @@ import com.example.homework2.data.DataImages
 import com.example.homework2.data.DataProfile
 import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.model.Profile
+import com.example.homework2.databinding.ActivityMainBinding
 import com.example.homework2.databinding.FragmentProfileBinding
 import com.example.homework2.presentation.auth.AuthFragmentDirections
 import com.example.homework2.presentation.imagesCard.DataImagesCard
@@ -34,6 +38,7 @@ import kotlin.random.Random
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
 
+
     @Inject
     lateinit var prefs: PrefsStorage
 
@@ -50,44 +55,28 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val viewModel by viewModels<ProfileViewModel>()
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val builder = MaterialAlertDialogBuilder(requireContext())
-
-        builder.setMessage("Вы уверены, что хотите выйти?")
-        builder.setCancelable(true)
-        builder.setTitle("Выход")
-        builder.setPositiveButton("Принять", DialogInterface.OnClickListener() { dialog, which ->
-            findNavController().graph.setStartDestination(R.id.authFragment)
-
-        })
-        builder.setNegativeButton("Отмена", DialogInterface.OnClickListener() { dialog, which ->
-        })
-        viewModel.getProfile("huntams")//prefs.username.toString())
+        viewModel.getProfile(prefs.profile.toString())//prefs.username.toString())
 
         viewModel.profileLiveData.observe(viewLifecycleOwner) { viewProfile ->
-            builder.setTitle(viewProfile.subscribed.toString())
             profAdapter.apply {
                 submitList(mutableListOf(viewProfile))
                 setCallback { profile ->
-                    if (profile.username == prefs.username.toString()) {
-
+                    if (profile.username == prefs.username) {
                         findNavController().navigate(
                             ProfileFragmentDirections.actionProfileToProfileEditFragment()
                         )
                     } else {
-                        if (!viewProfile.subscribed)
-                            viewModel.subscribe(username = viewProfile.username)
+                        if (!profile.subscribed)
+                            viewModel.subscribe(username = profile.username)
                         else
-                            viewModel.unsubscribe(viewProfile.username)
+                            viewModel.unsubscribe(profile.username)
                     }
-                    viewModel.getProfile("huntams")
+                    viewModel.getProfile(prefs.profile.toString())
 
                 }
-                viewModel.usernameLiveData.observe(viewLifecycleOwner) {
-                    //builder.setTitle(viewProfile.toString())
-                    builder.setTitle(viewProfile.subscribed.toString())
-                    viewModel.getProfile("huntams")
-                }
+
             }
             imageAdapter.apply {
                 setCallback {
@@ -98,7 +87,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 submitList(mutableListOf(viewProfile))
             }
         }
-        viewModel.getProfilePosts("evo")//prefs.username.toString())
+        viewModel.usernameLiveData.observe(viewLifecycleOwner) {
+            viewModel.getProfile(prefs.profile.toString())
+        }
+        viewModel.getProfilePosts(prefs.profile.toString())//prefs.username.toString())
 
         viewModel.postsLiveData.observe(viewLifecycleOwner) {
             postPagingAdapter.apply {
@@ -112,27 +104,43 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
         }
-
-        /*
-        binding.toolbar.setOnMenuItemClickListener {
-            builder.create().show()
-            true
-        }
-
-         */
         binding.recyclerView.adapter = ConcatAdapter(profAdapter, imageAdapter, postPagingAdapter)
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(
                 ProfileFragmentDirections.actionProfileToPostFragment()
             )
-
-            //AuthFragmentDirections.actionAuthFragmentToProfileFragment()
         }
         super.onViewCreated(view, savedInstanceState)
-        /*
-        val navGraph = findNavController().navInflater.inflate(R.navigation.nav_graph)
-        navGraph.setStartDestination(R.id.profileFragment)
-        findNavController().graph = navGraph
-         */
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.navigation_menu, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.actionExit) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+            builder.setMessage("Вы уверены, что хотите выйти?")
+            builder.setCancelable(true)
+            builder.setTitle("Выход")
+            builder.setPositiveButton(
+                "Принять",
+                DialogInterface.OnClickListener() { dialog, which ->
+                    findNavController().navigate(R.id.authFragment)
+                })
+            builder.setNegativeButton("Отмена", DialogInterface.OnClickListener() { dialog, which ->
+            })
+            builder.create().show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

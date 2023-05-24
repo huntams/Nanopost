@@ -38,8 +38,6 @@ class ProfileViewModel @Inject constructor(
     val profileLiveData: LiveData<Profile> = _profileLiveData
     private val _postsLiveData = MutableLiveData<PagingData<Post>>()
     val postsLiveData: LiveData<PagingData<Post>> = _postsLiveData
-    private val _postLiveData = MutableLiveData<Post>()
-    val postLiveData: LiveData<Post> = _postLiveData
     private val _usernameLiveData = MutableLiveData<Boolean>()
     val usernameLiveData: LiveData<Boolean> = _usernameLiveData
     fun getProfile(profileId: String = "evo") {
@@ -50,10 +48,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun setPost(post: Post) {
-        _postLiveData.value = post
-
-    }
 
     fun getProfilePosts(username: String) {
         viewModelScope.launch {

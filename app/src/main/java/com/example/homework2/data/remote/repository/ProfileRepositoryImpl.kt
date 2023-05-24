@@ -8,15 +8,19 @@ import androidx.paging.map
 import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.mappers.ImageMapper
 import com.example.homework2.data.mappers.PostMapper
+import com.example.homework2.data.mappers.ProfileCompactMapper
 import com.example.homework2.data.mappers.ProfileMapper
 import com.example.homework2.data.model.Image
 import com.example.homework2.data.model.Post
 import com.example.homework2.data.model.Profile
+import com.example.homework2.data.model.ProfileCompact
 import com.example.homework2.data.pagging.FeedPagingSource
 import com.example.homework2.data.pagging.ImagePagingSource
 import com.example.homework2.data.pagging.PostPagingSource
+import com.example.homework2.data.pagging.ProfileCompactPagingSource
 import com.example.homework2.data.remote.NanopostApiService
 import com.example.homework2.data.remote.NanopostAuthApiService
+import com.example.homework2.data.remote.model.ApiImage
 import com.example.homework2.data.remote.model.ApiResult
 import com.example.homework2.data.remote.model.ApiResultResponse
 import com.example.homework2.data.remote.model.ApiToken
@@ -26,6 +30,7 @@ import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -33,6 +38,7 @@ class ProfileRepositoryImpl @Inject constructor(
     private val profileMapper: ProfileMapper,
     private val postMapper: PostMapper,
     private val imageMapper: ImageMapper,
+    private val profileCompactMapper: ProfileCompactMapper,
     private val authApiService: NanopostAuthApiService,
     private val prefStorage: PrefsStorage
 ) : ProfileRepository {
@@ -55,7 +61,19 @@ class ProfileRepositoryImpl @Inject constructor(
         return apiService.unsubscribe(username)
     }
 
-    override suspend fun getImages(username: String): Flow<PagingData<Image>> {
+    override suspend fun searchProfile(query: String): Flow<PagingData<ProfileCompact>> {
+        return Pager(
+            config = PagingConfig(30, enablePlaceholders = false),
+            pagingSourceFactory = { ProfileCompactPagingSource(apiService, query) },
+        ).flow.map { pagingdata ->
+            pagingdata.map {
+                profileCompactMapper.apiToModel(it)
+            }
+
+        }
+    }
+
+    override suspend fun getImages(username: String): Flow<PagingData<Image>>{
         return Pager(
             config = PagingConfig(30, enablePlaceholders = false),
             pagingSourceFactory = { ImagePagingSource(apiService, username) },
@@ -136,7 +154,7 @@ class ProfileRepositoryImpl @Inject constructor(
             )
         }
         return apiService.editProfile(
-            profileId = profileId,
+            profileId = "huntams",
             displayName = displayName?.toRequestBody(),
             bio = bio?.toRequestBody(),
             avatar = image
@@ -145,6 +163,16 @@ class ProfileRepositoryImpl @Inject constructor(
     override suspend fun getPost(postId: String): Post {
         return postMapper.apiToModel(apiService.getPost(postId))
     }
+
+    override suspend fun getImage(imageId: String): Image {
+        return imageMapper.apiToModel(apiService.getImage(imageId = imageId))
+    }
+
+    override suspend fun deleteImage(imageId: String): ApiResultResponse {
+        return apiService.deleteImage(imageId = imageId)
+    }
+
+
 
     override suspend fun getFeed(): Flow<PagingData<Post>> {
         return Pager(

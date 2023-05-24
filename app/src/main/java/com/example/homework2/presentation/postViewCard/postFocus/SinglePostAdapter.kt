@@ -35,12 +35,12 @@ class SinglePostAdapter @Inject constructor() : ListAdapter<ApiImage, SinglePost
                     ImageViewItemPost.load(item.sizes[0].url)
 
                 //closeAddImageView.setImageURI()
-                /*
+
                 root.setOnClickListener {
                     onClick.invoke(item)
                 }
 
-                 */
+
             }
 
         }

@@ -3,9 +3,11 @@ package com.example.homework2.data.remote
 
 import com.example.homework2.data.model.Post
 import com.example.homework2.data.model.Profile
+import com.example.homework2.data.model.ProfileCompact
 import com.example.homework2.data.remote.model.ApiImage
 import com.example.homework2.data.remote.model.ApiPost
 import com.example.homework2.data.remote.model.ApiProfile
+import com.example.homework2.data.remote.model.ApiProfileCompact
 import com.example.homework2.data.remote.model.ApiResult
 import com.example.homework2.data.remote.model.ApiResultResponse
 import com.example.homework2.data.remote.model.PageDataResponse
@@ -72,6 +74,13 @@ interface NanopostApiService {
         @Part image4: MultipartBody.Part?,
     ): ApiPost
 
+    @GET("/api/v1/profile/search")
+    suspend fun searchProfiles(
+        @Query("query") query: String,
+        @Query("count") count: Int,
+        @Query("Offset") offset: String?,
+    ): PageDataResponse<ApiProfileCompact>
+
     @PATCH("/api/v1/profile/{profileId}")
     @Multipart
     suspend fun editProfile(
@@ -80,4 +89,15 @@ interface NanopostApiService {
         @Part("bio") bio: RequestBody?,
         @Part avatar: MultipartBody.Part?,
     ): ApiResultResponse
+
+    @GET("/api/v1/image/{imageId}")
+    suspend fun getImage(
+        @Path("imageId") imageId: String
+    ): ApiImage
+
+    @DELETE("/api/v1/image/{imageId}")
+    suspend fun deleteImage(
+        @Path("imageId") imageId: String
+    ): ApiResultResponse
+
 }
