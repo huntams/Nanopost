@@ -141,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/image_size"
             android:layout_margin="16dp"
-            android:text="subscribe"
+            android:text="@string/subscribe"
             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -2,16 +2,24 @@ package com.example.homework2.presentation.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.example.homework2.R
 import com.example.homework2.data.DataProfile
+import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.model.Profile
 import com.example.homework2.databinding.ProfileViewCardBinding
 import javax.inject.Inject
 
 
-class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+class ProfileAdapter @Inject constructor() :
+    ListAdapter<Profile, ProfileAdapter.DataViewHolder>(diffUtilCallback) {
+
+    @Inject
+    lateinit var prefs: PrefsStorage
 
     private var onClick: (Profile) -> Unit = {}
     fun setCallback(callback: (Profile) -> Unit) {
@@ -34,10 +42,32 @@ class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter
         fun bind(item: Profile) {
             with(binding) {
 
-                textViewName.text = item.username
+                if (item.username == prefs.username.toString())
+                    buttonSubscribe.text = "Edit"
+                else {
+                    if (!item.subscribed)
+                        buttonSubscribe.text = "subscribe"
+                    else
+                        buttonSubscribe.text = "unsubscribe"
+                }
+                if(item.displayName?.isNotEmpty() == true)
+                    textViewName.text = item.displayName
+                else
+                    textViewName.text = item.username
                 textViewDate.text = item.bio
-                root.setOnClickListener {
+                textViewPostNumber.text = item.postsCount.toString()
+                textViewSubscriberNumber.text = item.subscribersCount.toString()
+                textViewImageNumber.text = item.imagesCount.toString()
+                imageViewRounded.load(item.avatarSmall)
+                buttonSubscribe.setOnClickListener {
+                    if (item.subscribed)
+                        buttonSubscribe.text = "subscribe"
+                    else
+                        buttonSubscribe.text = "unsubscribe"
                     onClick.invoke(item)
+                }
+                root.setOnClickListener {
+                    //onClick.invoke(item)
                 }
             }
 
@@ -45,7 +75,7 @@ class ProfileAdapter @Inject constructor() : ListAdapter<Profile, ProfileAdapter
     }
 }
 
-val diffUtilCallback = object : DiffUtil.ItemCallback<Profile>() {
+private val diffUtilCallback = object : DiffUtil.ItemCallback<Profile>() {
 
     override fun areContentsTheSame(oldItem: Profile, newItem: Profile): Boolean {
         return oldItem == newItem

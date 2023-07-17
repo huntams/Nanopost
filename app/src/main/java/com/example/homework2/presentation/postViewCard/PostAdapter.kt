@@ -32,7 +32,7 @@ class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.D
         fun bind(item: DataProfile) {
             with(binding) {
                 textViewName.text = item.name
-                imageViewPostImage.load(item.link)
+                //imageViewPostImage.load(item.link)
                 textViewDate.text = item.date
                 textViewPostText.text = item.title
                 root.setOnClickListener {
@@ -44,7 +44,7 @@ class PostAdapter @Inject constructor() : ListAdapter<DataProfile, PostAdapter.D
     }
 }
 
-val diffUtilCallback = object : DiffUtil.ItemCallback<DataProfile>() {
+private val diffUtilCallback = object : DiffUtil.ItemCallback<DataProfile>() {
 
     override fun areContentsTheSame(oldItem: DataProfile, newItem: DataProfile): Boolean {
         return oldItem == newItem

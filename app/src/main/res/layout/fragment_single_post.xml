@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageViewRounded"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_margin="16dp"
+                android:background="@color/md_theme_dark_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/RoundedImage" />
+
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/username"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Apr 1, 2022 20:00:04"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
+                app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:dividerColor="@color/md_theme_dark_surfaceVariant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+            <TextView
+                android:id="@+id/textViewPostText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/divider" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPostText"
+                tools:listitem="@layout/item_image_post" />
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageViewFavorite"
+                android:layout_width="74dp"
+                android:layout_height="28dp"
+                android:layout_margin="16dp"
+                android:scaleType="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+                app:shapeAppearance="@style/RoundedImage"
+                app:strokeColor="@color/md_theme_dark_outline"
+                app:strokeWidth="1dp">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <ImageView
+                android:id="@+id/imageViewFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_favorite"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite" />
+
+            <TextView
+                android:id="@+id/textViewFavoriteNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginStart="8dp"
+                android:text="1"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewFavorite"
+                app:layout_constraintStart_toEndOf="@+id/imageViewFavorite"
+                app:layout_constraintTop_toTopOf="@+id/shapeableImageViewFavorite" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.google.android.material.card.MaterialCardView>

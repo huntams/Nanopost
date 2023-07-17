@@ -4,5 +4,8 @@
     <dimen name="profile_image_size">64dp</dimen>
     <dimen name="open_images">24dp</dimen>
     <dimen name="exit_image">36dp</dimen>
-    <dimen name="Bottom_navigation">96dp</dimen>
+    <dimen name="placeholder_size">80dp</dimen>
+    <dimen name="image_item_size">125dp</dimen>
+    <dimen name="post_image_size">412dp</dimen>
+    <dimen name="add_post_height">184dp</dimen>
 </resources>
