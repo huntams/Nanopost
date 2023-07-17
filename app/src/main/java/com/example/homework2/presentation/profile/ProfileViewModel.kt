@@ -47,7 +47,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
+ 
 
     fun getProfilePosts(username: String) {
         viewModelScope.launch {

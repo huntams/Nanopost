@@ -46,7 +46,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if(destination.id == R.id.authFragment){
                 binding.appbarMainActivity.visibility = View.GONE
             }
-            else if(destination.id == R.id.Profile||destination.id == R.id.Feed)
+            else if(destination.id == R.id.Feed){
+                binding.appbarMainActivity.visibility = View.VISIBLE
+                binding.toolbar.title = ""
+            }
+            else if(destination.id == R.id.Profile)
                 binding.appbarMainActivity.visibility = View.VISIBLE
             when (destination.id) {
                 R.id.authFragment, R.id.profileEditFragment ->{
@@ -57,24 +61,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
     }
-
-
-    /*
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.navigation_menu,menu)
-        menu?.findItem(R.id.actionAccept)?.isVisible = true
-        menu?.findItem(R.id.actionDelete)?.isVisible = true
-        menu?.findItem(R.id.actionExit)?.isVisible = true
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if(item.itemId == R.id.actionAccept){
-
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-     */
 }

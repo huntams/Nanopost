@@ -7,8 +7,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -110,6 +112,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 ProfileFragmentDirections.actionProfileToPostFragment()
             )
         }
+        val menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.navigation_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         super.onViewCreated(view, savedInstanceState)
     }
 

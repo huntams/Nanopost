@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -24,10 +25,10 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
     private val viewModel by viewModels<AuthViewModel>()
     private val binding by viewBinding(AuthorizationFragmentBinding::bind)
     private var free = false
-    @Inject
-    lateinit var prefs : PrefsStorage
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+    @Inject
+    lateinit var prefs: PrefsStorage
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         with(binding) {
             continueButton.setOnClickListener {
@@ -41,6 +42,7 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 usernameTextInputLayout.isEnabled = false
                                 passwordTextInputLayout.visibility = View.VISIBLE
                                 prefs.username = usernameTextInputEditText.text.toString()
+                                prefs.profile = usernameTextInputEditText.text.toString()
                             }
 
                             "TooLong" -> usernameTextInputLayout.error =
@@ -71,11 +73,9 @@ class AuthFragment : Fragment(R.layout.authorization_fragment) {
                                 username = usernameTextInputEditText.text.toString(),
                                 password = passwordTextInputEditText.text.toString()
                             )
-                        findNavController().clearBackStack(R.id.authFragment)
                         findNavController().navigate(
                             AuthFragmentDirections.actionAuthFragmentToFeed()
                         )
-
                     } else
                         passwordTextInputLayout.error =
                             "Пароль должен быть больше 7 символов"
