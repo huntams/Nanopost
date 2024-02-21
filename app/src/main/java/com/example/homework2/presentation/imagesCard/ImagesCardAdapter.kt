@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.databinding.ImagesCardBinding
-import com.example.homework2.data.DataImages
-import com.example.homework2.data.model.Image
-import com.example.homework2.data.model.Profile
-import com.example.homework2.data.remote.model.ApiImage
+import com.example.homework2.domain.model.Profile
 import javax.inject.Inject
 
 class ImagesCardAdapter @Inject constructor() :

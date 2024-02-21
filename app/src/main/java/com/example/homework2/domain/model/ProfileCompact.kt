@@ -1,4 +1,4 @@
-package com.example.homework2.data.model
+package com.example.homework2.domain.model
 
 data class ProfileCompact(
     val id : String,

@@ -1,8 +1,6 @@
 package com.example.homework2.presentation.profile
 
 import android.icu.text.SimpleDateFormat
-import android.opengl.Visibility
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.homework2.data.model.Post
 import com.example.homework2.databinding.ViewCardBinding
+import com.example.homework2.domain.model.Post
 import java.util.Date
 import javax.inject.Inject
 

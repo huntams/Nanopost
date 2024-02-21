@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.homework2.data.model.Post
-import com.example.homework2.data.model.Profile
-import com.example.homework2.data.model.ProfileCompact
+import com.example.homework2.domain.model.Post
+import com.example.homework2.domain.model.Profile
+import com.example.homework2.domain.model.ProfileCompact
 import com.example.homework2.domain.GetFeedUseCase
 import com.example.homework2.domain.SearchProfileCompactUseCase
 import com.example.homework2.domain.SubscribeUseCase
@@ -54,7 +54,7 @@ class FeedViewModel @Inject constructor(
         viewModelScope.launch {
             subscribeUseCase.execute(username)
                 .also {
-                    _usernameLiveData.postValue(it.result)
+                    _usernameLiveData.postValue(it)
                 }
         }
     }
@@ -63,7 +63,7 @@ class FeedViewModel @Inject constructor(
         viewModelScope.launch {
             unsubscribeUseCase.execute(username)
                 .also {
-                    _usernameLiveData.postValue(it.result)
+                    _usernameLiveData.postValue(it)
                 }
         }
     }

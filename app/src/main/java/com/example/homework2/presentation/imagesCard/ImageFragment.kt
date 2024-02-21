@@ -5,8 +5,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -21,7 +24,7 @@ import javax.inject.Inject
 class ImageFragment : Fragment(R.layout.fragment_paging_images) {
 
     private val binding by viewBinding(FragmentPagingImagesBinding::bind)
-
+    private val menuHost: MenuHost by lazy { requireActivity() }
     @Inject
     lateinit var prefs: PrefsStorage
 
@@ -52,31 +55,20 @@ class ImageFragment : Fragment(R.layout.fragment_paging_images) {
                 layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
                 adapter = imagePagingAdapter
             }
-            /*
-            val data = intent.extras?.getParcelableArrayList<DataImagesCard>("ARG_LINK_KEY")
-            with(binding) {
-                imageAdapter.submitList(data)
-                recyclerView.apply {
-                    layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
-                    adapter = imageAdapter
+            menuHost.addMenuProvider(object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.empty_menu, menu)
                 }
-            }
 
-             */
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        else -> {
+                            findNavController().popBackStack()
+                        }
+                    }
+                }
+            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (android.R.id.home == item.itemId) {
-            findNavController().popBackStack()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

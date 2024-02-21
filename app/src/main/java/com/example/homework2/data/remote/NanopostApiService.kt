@@ -1,14 +1,10 @@
 package com.example.homework2.data.remote
 
 
-import com.example.homework2.data.model.Post
-import com.example.homework2.data.model.Profile
-import com.example.homework2.data.model.ProfileCompact
 import com.example.homework2.data.remote.model.ApiImage
 import com.example.homework2.data.remote.model.ApiPost
 import com.example.homework2.data.remote.model.ApiProfile
 import com.example.homework2.data.remote.model.ApiProfileCompact
-import com.example.homework2.data.remote.model.ApiResult
 import com.example.homework2.data.remote.model.ApiResultResponse
 import com.example.homework2.data.remote.model.PageDataResponse
 import okhttp3.MultipartBody

@@ -9,10 +9,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import com.example.homework2.R
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.homework2.R
 import com.example.homework2.databinding.FragmentAddPostBinding
 import com.example.homework2.presentation.service.CreatePostService
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +27,7 @@ class PostFragment : Fragment(R.layout.fragment_add_post) {
 
     @Inject
     lateinit var postAdapter: AddPostAdapter
+    private val menuHost: MenuHost by lazy { requireActivity() }
 
     private val binding by viewBinding(FragmentAddPostBinding::bind)
     private val listUri: MutableList<Uri> = mutableListOf()
@@ -41,16 +45,6 @@ class PostFragment : Fragment(R.layout.fragment_add_post) {
                     .show()
             }
         }
-    /*
-    companion object {
-        fun createIntent(context: Context, data: DataProfile) =
-            Intent(context, CreatePostService::class.java).apply {
-                putExtra("ARG_TEXT_KEY", data)
-            }
-    }
-
-     */
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -82,39 +76,32 @@ class PostFragment : Fragment(R.layout.fragment_add_post) {
                     }
                 }
                 recyclerView.adapter = postAdapter
-
             }
+            menuHost.addMenuProvider(object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.navigation_create_post, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.actionAccept-> {
+                            activity?.startService(
+                                CreatePostService.newIntent(
+                                    requireContext(),
+                                    binding.editTextNote.text.toString(),
+                                    listUri
+                                )
+                            )
+                            true
+                        }
+                        else -> {
+                            findNavController().popBackStack()
+                        }
+                    }
+                }
+            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.navigation_create_post, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (android.R.id.home == item.itemId) {
-            findNavController().popBackStack()
-        }
-
-        if (item.itemId == R.id.actionAccept) {
-            activity?.startService(
-                CreatePostService.newIntent(
-                    requireContext(),
-                    binding.editTextNote.text.toString(),
-                    listUri
-                )
-            )
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

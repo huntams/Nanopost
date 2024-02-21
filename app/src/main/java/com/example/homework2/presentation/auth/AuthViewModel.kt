@@ -42,7 +42,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             checkUsernameUseCase.execute(username)
                 .also {
-                    _usernameLiveData.postValue(it.result)
+                    _usernameLiveData.postValue(it)
                 }
         }
     }

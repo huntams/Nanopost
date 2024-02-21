@@ -6,40 +6,27 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.R
-import com.example.homework2.data.DataImages
-import com.example.homework2.data.DataProfile
 import com.example.homework2.data.PrefsStorage
-import com.example.homework2.data.model.Profile
-import com.example.homework2.databinding.ActivityMainBinding
 import com.example.homework2.databinding.FragmentProfileBinding
-import com.example.homework2.presentation.auth.AuthFragmentDirections
-import com.example.homework2.presentation.imagesCard.DataImagesCard
 import com.example.homework2.presentation.imagesCard.ImagesCardAdapter
-import com.example.homework2.presentation.postViewCard.PostAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.cancel
-import kotlinx.serialization.builtins.serializer
-import java.lang.annotation.Inherited
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
-
+    private val menuHost: MenuHost by lazy { requireActivity() }
 
     @Inject
     lateinit var prefs: PrefsStorage
@@ -80,6 +67,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
 
             }
+            profAdapter.also {  }
             imageAdapter.apply {
                 setCallback {
                     findNavController().navigate(
@@ -112,49 +100,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 ProfileFragmentDirections.actionProfileToPostFragment()
             )
         }
-        val menuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
                 menuInflater.inflate(R.menu.navigation_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                // Handle the menu selection
+                if (menuItem.itemId == R.id.actionExit) {
+                    val builder = MaterialAlertDialogBuilder(requireContext())
+                    builder.setMessage("Вы уверены, что хотите выйти?")
+                    builder.setCancelable(true)
+                    builder.setTitle("Выход")
+                    builder.setPositiveButton(
+                        "Принять",
+                        DialogInterface.OnClickListener() { _, _ ->
+                            findNavController().navigate(R.id.authFragment)
+                        })
+                    builder.setNegativeButton("Отмена", DialogInterface.OnClickListener() { _, _ ->
+                    })
+                    builder.create().show()
+                }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.navigation_menu, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if (item.itemId == R.id.actionExit) {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setMessage("Вы уверены, что хотите выйти?")
-            builder.setCancelable(true)
-            builder.setTitle("Выход")
-            builder.setPositiveButton(
-                "Принять",
-                DialogInterface.OnClickListener() { dialog, which ->
-                    findNavController().navigate(R.id.authFragment)
-                })
-            builder.setNegativeButton("Отмена", DialogInterface.OnClickListener() { dialog, which ->
-            })
-            builder.create().show()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

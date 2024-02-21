@@ -10,27 +10,24 @@ import com.example.homework2.data.mappers.ImageMapper
 import com.example.homework2.data.mappers.PostMapper
 import com.example.homework2.data.mappers.ProfileCompactMapper
 import com.example.homework2.data.mappers.ProfileMapper
-import com.example.homework2.data.model.Image
-import com.example.homework2.data.model.Post
-import com.example.homework2.data.model.Profile
-import com.example.homework2.data.model.ProfileCompact
+import com.example.homework2.domain.model.Image
+import com.example.homework2.domain.model.Post
+import com.example.homework2.domain.model.Profile
+import com.example.homework2.domain.model.ProfileCompact
 import com.example.homework2.data.pagging.FeedPagingSource
 import com.example.homework2.data.pagging.ImagePagingSource
 import com.example.homework2.data.pagging.PostPagingSource
 import com.example.homework2.data.pagging.ProfileCompactPagingSource
 import com.example.homework2.data.remote.NanopostApiService
 import com.example.homework2.data.remote.NanopostAuthApiService
-import com.example.homework2.data.remote.model.ApiImage
-import com.example.homework2.data.remote.model.ApiResult
-import com.example.homework2.data.remote.model.ApiResultResponse
 import com.example.homework2.data.remote.model.ApiToken
 import com.example.homework2.data.remote.model.RegistrationRequest
+import com.example.homework2.domain.repository.ProfileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -53,12 +50,12 @@ class ProfileRepositoryImpl @Inject constructor(
         return authApiService.register(registrationRequest)
     }
 
-    override suspend fun subscribe(username: String): ApiResultResponse {
-        return apiService.subscribe(username)
+    override suspend fun subscribe(username: String): Boolean {
+        return apiService.subscribe(username).result
     }
 
-    override suspend fun unsubscribe(username: String): ApiResultResponse {
-        return apiService.unsubscribe(username)
+    override suspend fun unsubscribe(username: String): Boolean {
+        return apiService.unsubscribe(username).result
     }
 
     override suspend fun searchProfile(query: String): Flow<PagingData<ProfileCompact>> {
@@ -89,8 +86,8 @@ class ProfileRepositoryImpl @Inject constructor(
         return profileMapper.apiToModel(apiService.getProfile(profileId))
     }
 
-    override suspend fun checkUsername(username: String): ApiResult {
-        return authApiService.checkUsername(username)
+    override suspend fun checkUsername(username: String): String {
+        return authApiService.checkUsername(username).result
     }
 
     override suspend fun createPost(text: String?, list: List<ByteArray>?): Post {
@@ -144,7 +141,7 @@ class ProfileRepositoryImpl @Inject constructor(
         displayName: String?,
         bio: String?,
         avatar: ByteArray?
-    ): ApiResultResponse {
+    ): Boolean {
         var image: MultipartBody.Part? = null
         avatar?.let {
             image = MultipartBody.Part.createFormData(
@@ -158,7 +155,7 @@ class ProfileRepositoryImpl @Inject constructor(
             displayName = displayName?.toRequestBody(),
             bio = bio?.toRequestBody(),
             avatar = image
-        )
+        ).result
     }
     override suspend fun getPost(postId: String): Post {
         return postMapper.apiToModel(apiService.getPost(postId))
@@ -168,8 +165,8 @@ class ProfileRepositoryImpl @Inject constructor(
         return imageMapper.apiToModel(apiService.getImage(imageId = imageId))
     }
 
-    override suspend fun deleteImage(imageId: String): ApiResultResponse {
-        return apiService.deleteImage(imageId = imageId)
+    override suspend fun deleteImage(imageId: String): Boolean {
+        return apiService.deleteImage(imageId = imageId).result
     }
 
 

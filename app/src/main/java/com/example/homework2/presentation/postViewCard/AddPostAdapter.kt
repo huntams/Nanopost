@@ -34,13 +34,6 @@ class AddPostAdapter @Inject constructor() : ListAdapter<AddPostData, AddPostAda
                 buttonClose.setOnClickListener {
                     onClick.invoke(item)
                 }
-                //closeAddImageView.setImageURI()
-                /*
-                root.setOnClickListener {
-                    onClick.invoke(item)
-                }
-
-                 */
             }
 
         }

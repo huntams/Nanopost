@@ -1,7 +1,7 @@
 package com.example.homework2.domain
 
-import com.example.homework2.data.model.Image
-import com.example.homework2.data.remote.repository.ProfileRepository
+import com.example.homework2.domain.model.Image
+import com.example.homework2.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 class GetImageUseCase @Inject constructor(

@@ -1,18 +1,13 @@
 package com.example.homework2.presentation.imagesCard
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.homework2.data.model.Image
-import com.example.homework2.data.model.Post
-import com.example.homework2.databinding.FragmentPagingImagesBinding
 import com.example.homework2.databinding.ItemImageBinding
-import com.example.homework2.databinding.ViewCardBinding
+import com.example.homework2.domain.model.Image
 import javax.inject.Inject
 
 class ImagePagingAdapter @Inject constructor() :

@@ -1,19 +1,20 @@
 package com.example.homework2.presentation.postViewCard.postFocus
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.homework2.data.remote.model.ApiImage
 import com.example.homework2.databinding.ItemImagePostBinding
+import com.example.homework2.domain.model.Image
 import javax.inject.Inject
 
-class SinglePostAdapter @Inject constructor() : ListAdapter<ApiImage, SinglePostAdapter.DataViewHolder>(diffUtilCallback) {
+class SinglePostAdapter @Inject constructor() : ListAdapter<Image, SinglePostAdapter.DataViewHolder>(diffUtilCallback) {
 
-    private var onClick: (ApiImage) -> Unit = {}
-    fun setCallback(callback: (ApiImage) -> Unit) {
+    private var onClick: (Image) -> Unit = {}
+    fun setCallback(callback: (Image) -> Unit) {
         this.onClick = callback
     }
 
@@ -29,12 +30,10 @@ class SinglePostAdapter @Inject constructor() : ListAdapter<ApiImage, SinglePost
     inner class DataViewHolder(
         private val binding: ItemImagePostBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ApiImage) {
+        fun bind(item: Image) {
 
             with(binding) {
                     ImageViewItemPost.load(item.sizes[0].url)
-
-                //closeAddImageView.setImageURI()
 
                 root.setOnClickListener {
                     onClick.invoke(item)
@@ -47,13 +46,13 @@ class SinglePostAdapter @Inject constructor() : ListAdapter<ApiImage, SinglePost
     }
 }
 
-private val diffUtilCallback = object : DiffUtil.ItemCallback<ApiImage>() {
+private val diffUtilCallback = object : DiffUtil.ItemCallback<Image>() {
 
-    override fun areContentsTheSame(oldItem: ApiImage, newItem: ApiImage): Boolean {
+    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: ApiImage, newItem: ApiImage): Boolean {
+    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
         return oldItem.id == newItem.id
     }
 }

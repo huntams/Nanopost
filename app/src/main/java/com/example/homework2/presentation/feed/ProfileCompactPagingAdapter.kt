@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homework2.data.PrefsStorage
-import com.example.homework2.data.model.Image
-import com.example.homework2.data.model.ProfileCompact
+import com.example.homework2.domain.model.Image
+import com.example.homework2.domain.model.ProfileCompact
 import com.example.homework2.databinding.ItemImageBinding
 import com.example.homework2.databinding.ItemSearchProfileBinding
 import javax.inject.Inject

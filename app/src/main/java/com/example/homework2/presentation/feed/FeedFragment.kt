@@ -82,6 +82,7 @@ class FeedFragment : Fragment(R.layout.fragment_profile) {
 
         binding.recyclerView.adapter = postPagingAdapter
 
+        binding
 
 
         /*
@@ -101,11 +102,6 @@ class FeedFragment : Fragment(R.layout.fragment_profile) {
 
 
         super.onViewCreated(view, savedInstanceState)
-        /*
-        val navGraph = findNavController().navInflater.inflate(R.navigation.nav_graph)
-        navGraph.setStartDestination(R.id.profileFragment)
-        findNavController().graph = navGraph
-         */
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

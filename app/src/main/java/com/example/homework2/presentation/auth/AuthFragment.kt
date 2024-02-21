@@ -1,20 +1,15 @@
 package com.example.homework2.presentation.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.homework2.R
 import com.example.homework2.data.PrefsStorage
 import com.example.homework2.data.remote.model.RegistrationRequest
 import com.example.homework2.databinding.AuthorizationFragmentBinding
-import com.example.homework2.presentation.profile.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

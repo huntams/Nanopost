@@ -8,25 +8,23 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.example.homework2.R
-import com.example.homework2.data.model.Post
-import com.example.homework2.databinding.FragmentAddPostBinding
 import com.example.homework2.databinding.FragmentSinglePostBinding
-import com.example.homework2.presentation.profile.ProfileAdapter
-import com.example.homework2.presentation.profile.ProfileViewModel
-import com.example.homework2.presentation.service.CreatePostService
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
-
+    private val menuHost: MenuHost by lazy { requireActivity() }
     private val viewModel by viewModels<SinglePostViewModel>()
     private val binding by viewBinding(FragmentSinglePostBinding::bind)
     @Inject
@@ -59,20 +57,20 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
             }
 
         }
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.empty_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    else -> {
+                        findNavController().popBackStack()
+                    }
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return super.onCreateView(inflater, container, savedInstanceState)
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (android.R.id.home == item.itemId) {
-            findNavController().popBackStack()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -2,16 +2,13 @@ package com.example.homework2.presentation.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.homework2.R
-import com.example.homework2.data.DataProfile
 import com.example.homework2.data.PrefsStorage
-import com.example.homework2.data.model.Profile
 import com.example.homework2.databinding.ProfileViewCardBinding
+import com.example.homework2.domain.model.Profile
 import javax.inject.Inject
 
 
